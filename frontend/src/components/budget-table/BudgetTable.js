@@ -7,7 +7,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-import { Typography } from "@mui/material";
+import { InputAdornment, Typography } from "@mui/material";
 
 export const BudgetTable = () => {
   const [categoryValues, setCategoryValues] = useState({});
@@ -20,15 +20,18 @@ export const BudgetTable = () => {
   ];
 
   const handleValueChange = (categoryName, newValue) => {
-    setCategoryValues({
-      ...categoryValues,
-      [categoryName]: newValue,
-    });
+    if (/^\d*\.?\d*$/.test(newValue) || newValue === "") {
+      setCategoryValues({
+        ...categoryValues,
+        [categoryName]: newValue,
+      });
+    }
   };
+
 
   return (
     <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
-      <Typography>Enter Your July Budget</Typography>
+      <Typography variant="h6">Enter July Spends</Typography>
       <TableContainer>
         <Table aria-label="Budget Table">
           <TableBody>
@@ -43,6 +46,11 @@ export const BudgetTable = () => {
                     onChange={(e) =>
                       handleValueChange(category.name, e.target.value)
                     }
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">£</InputAdornment>
+                      ),
+                    }}
                   />
                 </TableCell>
               </TableRow>
