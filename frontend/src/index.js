@@ -9,9 +9,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <Auth0ProviderWithNavigate>
+      {/* <Auth0ProviderWithNavigate> */}
         <App />
-      </Auth0ProviderWithNavigate>
+      {/* </Auth0ProviderWithNavigate> */}
     </React.StrictMode>
   </BrowserRouter>,
 );
