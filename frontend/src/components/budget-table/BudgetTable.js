@@ -40,7 +40,6 @@ export const BudgetTable = () => {
                 <TableCell>{category.name}</TableCell>
                 <TableCell>
                   <TextField
-                    label="Amount"
                     variant="outlined"
                     value={categoryValues[category.name] || ""}
                     onChange={(e) =>
