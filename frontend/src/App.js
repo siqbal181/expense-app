@@ -1,10 +1,12 @@
 import './App.css';
-import Navbar from './components/Navbar';
+import { BudgetTable } from './components/budget-table/BudgetTable';
+import Navbar from './components/navbar/Navbar';
 
 function App() {
   return (
     <div className="App">
       <Navbar/>
+      <BudgetTable/>
     </div>
   );
 }
