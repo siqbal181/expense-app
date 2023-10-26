@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import { InputAdornment, Typography } from "@mui/material";
 import { CategorySelectButton } from "./CategorySelectButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import { budgetData } from "../../budgetData";
 
 export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
@@ -35,6 +36,15 @@ export const BudgetEditTable = () => {
     addCategory(selectedCategory);
   };
 
+  const saveBudgets = () => {
+    const updatedBudgets = categories.map((category) => ({
+      category,
+      amount: categoryValues[category] || 0,
+    }));
+
+    budgetData.length = 0;
+    Array.prototype.push.apply(budgetData, updatedBudgets);
+  };
   return (
     isAuthenticated && (
       <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
@@ -68,7 +78,7 @@ export const BudgetEditTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }}>
+      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }} onClick={saveBudgets(categories, categoryValues)}>
         Submit
       </Button>
       <CategorySelectButton
