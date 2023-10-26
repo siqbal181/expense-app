@@ -1,12 +1,14 @@
 import './App.css';
-import { BudgetTable } from './components/budgetInputs/BudgetTable';
+import { BudgetInputs } from './components/budgetInputs/BudgetInputs';
+import { BudgetEditTable } from './components/budgetEditTable/BudgetEditTable';
 import Navbar from './components/navbar/Navbar';
 
 function App() {
   return (
     <div className="App">
       <Navbar/>
-      <BudgetTable/>
+      <BudgetEditTable/>
+
     </div>
   );
 }

@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import { InputAdornment, Typography } from "@mui/material";
 
-export const BudgetInputs = () => {
+export const BudgetEditTable = () => {
   const [categoryValues, setCategoryValues] = useState({});
 
   const budgetCategories = [
@@ -18,6 +18,16 @@ export const BudgetInputs = () => {
     { name: "Rent", value: "3" },
     { name: "Bills", value: "4" },
   ];
+
+  const budgetCategory = ['Shopping', 'Grocery', ' Rent', 'Bills', 'Charity'];
+
+  const handleAddCategory = () => {
+    // create a new row in the budget table
+    // create a dropdown menu of list of choices
+    // make an empty const array of categoriesNotUsed
+    // iterate over the budgetCategory list
+    // for the ones which are not used in the Budget Table (via state), add in the array
+  }
 
   return (
     <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
@@ -45,8 +55,11 @@ export const BudgetInputs = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" style={{ marginTop: 20 }}>
+      <Button variant="contained" color="primary" style={{ marginTop: 22, margin: 4 }}>
         Submit
+      </Button>
+      <Button variant="contained" color="primary" style={{ marginTop: 22, margin: 4 }} onClick={handleAddCategory}>
+        Add Category
       </Button>
     </Paper>
   );

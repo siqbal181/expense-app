@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const BudgetTable = () => {
+export const BudgetInputs = () => {
   const { isAuthenticated } = useAuth0();
 
   const [categoryValues, setCategoryValues] = useState({});
