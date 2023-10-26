@@ -7,27 +7,24 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-import { InputAdornment, Typography } from "@mui/material";
+import { InputAdornment, Select, MenuItem, Typography } from "@mui/material";
 
 export const BudgetEditTable = () => {
   const [categoryValues, setCategoryValues] = useState({});
+  const [categories, setCategories] = useState(['Shopping']);
 
-  const budgetCategories = [
-    { name: "Shopping", value: "1" },
-    { name: "Groceries", value: "2" },
-    { name: "Rent", value: "3" },
-    { name: "Bills", value: "4" },
-  ];
+  const allCategories = ['Shopping', 'Bills', 'Groceries', 'Rent', 'Leisure', 'Holidays'];
 
-  const budgetCategory = ['Shopping', 'Grocery', ' Rent', 'Bills', 'Charity'];
+  const addCategory = (category) => {
+    if (!categories.includes(category)) {
+      setCategories([...categories, category]);
+      setCategoryValues({ ...categoryValues, [category]: "" });
+    }
+  };
 
-  const handleAddCategory = () => {
-    // create a new row in the budget table
-    // create a dropdown menu of list of choices
-    // make an empty const array of categoriesNotUsed
-    // iterate over the budgetCategory list
-    // for the ones which are not used in the Budget Table (via state), add in the array
-  }
+  const handleAddCategory = (category) => {
+    addCategory('New Category');
+  };
 
   return (
     <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
@@ -35,14 +32,17 @@ export const BudgetEditTable = () => {
       <TableContainer>
         <Table aria-label="Budget Table">
           <TableBody>
-            {budgetCategories.map((category) => (
-              <TableRow key={category.value}>
-                <TableCell>{category.name}</TableCell>
+            {categories.map((category) => (
+              <TableRow key={category}>
+                <TableCell>{category}</TableCell>
                 <TableCell>
                   <TextField
                     variant="outlined"
-                    value={categoryValues[category.name] || ""}
-                    onChange={(e) => console.log("Hello")}
+                    value={categoryValues[category] || ""}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setCategoryValues({ ...categoryValues, [category]: newValue });
+                    }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">£</InputAdornment>
@@ -55,12 +55,41 @@ export const BudgetEditTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" style={{ marginTop: 22, margin: 4 }}>
+      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }}>
         Submit
       </Button>
-      <Button variant="contained" color="primary" style={{ marginTop: 22, margin: 4 }} onClick={handleAddCategory}>
+      <CategoryDropdown
+        allCategories={allCategories}
+        selectedCategories={categories}
+        addCategory={addCategory}
+      />
+      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }} onClick={handleAddCategory}>
         Add Category
       </Button>
     </Paper>
+  );
+};
+
+const CategoryDropdown = ({ allCategories, selectedCategories, addCategory }) => {
+  const unusedCategories = allCategories.filter(category => !selectedCategories.includes(category));
+
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    if (selectedCategory !== "") {
+      addCategory(selectedCategory);
+    }
+  };
+
+  return (
+    <Select value="" onChange={handleCategoryChange}>
+      <MenuItem value="" disabled>
+        Select a Category
+      </MenuItem>
+      {unusedCategories.map((category) => (
+        <MenuItem key={category} value={category}>
+          {category}
+        </MenuItem>
+      ))}
+    </Select>
   );
 };
