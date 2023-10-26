@@ -23,6 +23,11 @@ export const BudgetEditTable = () => {
     }
   };
 
+  const deleteCategory = (category) => {
+    const updatedCategories = categories.filter((cat) => cat !== category);
+    setCategories(updatedCategories);
+  };
+
   const handleCategorySelect = (selectedCategory) => {
     addCategory(selectedCategory);
   };
@@ -50,6 +55,9 @@ export const BudgetEditTable = () => {
                       ),
                     }}
                   />
+                  <div className="trash-icon">
+                    <i className="material-icons" onClick={() => deleteCategory(category)}>delete</i>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
