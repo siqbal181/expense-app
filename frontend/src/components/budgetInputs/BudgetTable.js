@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import { InputAdornment, Typography } from "@mui/material";
+import { TextField, Button, Paper, Table, TableBody, TableCell, TableContainer, TableRow, InputAdornment, Typography } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const BudgetTable = () => {
+  const { isAuthenticated } = useAuth0();
+
   const [categoryValues, setCategoryValues] = useState({});
 
   const budgetCategories = [
@@ -30,6 +25,8 @@ export const BudgetTable = () => {
 
 
   return (
+    isAuthenticated && (
+      <div>
     <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
       <Typography variant="h6">Enter July Spends</Typography>
       <TableContainer>
@@ -61,5 +58,7 @@ export const BudgetTable = () => {
         Submit
       </Button>
     </Paper>
+      </div>
+    )
   );
 };

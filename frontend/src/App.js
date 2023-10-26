@@ -1,5 +1,5 @@
 import './App.css';
-import { BudgetTable } from './components/budget-table/BudgetTable';
+import { BudgetTable } from './components/budgetInputs/BudgetTable';
 import Navbar from './components/navbar/Navbar';
 
 function App() {
