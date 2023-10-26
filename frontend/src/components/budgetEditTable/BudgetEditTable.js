@@ -22,8 +22,8 @@ export const BudgetEditTable = () => {
     }
   };
 
-  const handleAddCategory = (category) => {
-    addCategory('New Category');
+  const handleCategorySelect = (selectedCategory) => {
+    addCategory(selectedCategory);
   };
 
   return (
@@ -58,25 +58,22 @@ export const BudgetEditTable = () => {
       <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }}>
         Submit
       </Button>
-      <CategoryDropdown
+      <CategorySelectButton
         allCategories={allCategories}
         selectedCategories={categories}
-        addCategory={addCategory}
+        handleCategorySelect={handleCategorySelect}
       />
-      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }} onClick={handleAddCategory}>
-        Add Category
-      </Button>
     </Paper>
   );
 };
 
-const CategoryDropdown = ({ allCategories, selectedCategories, addCategory }) => {
+const CategorySelectButton = ({ allCategories, selectedCategories, handleCategorySelect }) => {
   const unusedCategories = allCategories.filter(category => !selectedCategories.includes(category));
 
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     if (selectedCategory !== "") {
-      addCategory(selectedCategory);
+      handleCategorySelect(selectedCategory);
     }
   };
 
