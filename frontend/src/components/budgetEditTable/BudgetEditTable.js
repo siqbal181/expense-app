@@ -7,7 +7,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-import { InputAdornment, Select, MenuItem, Typography } from "@mui/material";
+import { InputAdornment, Typography } from "@mui/material";
+import { CategorySelectButton } from "./CategorySelectButton";
 
 export const BudgetEditTable = () => {
   const [categoryValues, setCategoryValues] = useState({});
@@ -64,29 +65,5 @@ export const BudgetEditTable = () => {
         handleCategorySelect={handleCategorySelect}
       />
     </Paper>
-  );
-};
-
-const CategorySelectButton = ({ allCategories, selectedCategories, handleCategorySelect }) => {
-  const unusedCategories = allCategories.filter(category => !selectedCategories.includes(category));
-
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    if (selectedCategory !== "") {
-      handleCategorySelect(selectedCategory);
-    }
-  };
-
-  return (
-    <Select value="" onChange={handleCategoryChange}>
-      <MenuItem value="" disabled>
-        Select a Category
-      </MenuItem>
-      {unusedCategories.map((category) => (
-        <MenuItem key={category} value={category}>
-          {category}
-        </MenuItem>
-      ))}
-    </Select>
   );
 };
