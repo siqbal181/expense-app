@@ -4,6 +4,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth0();
+
   const LoginButton = () => {
     const { loginWithRedirect } = useAuth0();
 
@@ -42,8 +44,8 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <LoginButton />
-      <LogoutButton />
+      {!isAuthenticated && <LoginButton />}
+      {isAuthenticated && <LogoutButton />}
     </div>
   );
 };
