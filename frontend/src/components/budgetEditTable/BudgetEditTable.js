@@ -9,8 +9,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import { InputAdornment, Typography } from "@mui/material";
 import { CategorySelectButton } from "./CategorySelectButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const BudgetEditTable = () => {
+  const { isAuthenticated } = useAuth0();
+  
   const [categoryValues, setCategoryValues] = useState({});
   const [categories, setCategories] = useState(['Shopping']);
 
