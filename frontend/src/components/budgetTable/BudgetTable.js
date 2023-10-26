@@ -19,7 +19,6 @@ export const BudgetInputs = () => {
     { name: "Bills", value: "4" },
   ];
 
-
   return (
     <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
       <Typography variant="h6">Edit Your Budgets</Typography>
@@ -33,9 +32,7 @@ export const BudgetInputs = () => {
                   <TextField
                     variant="outlined"
                     value={categoryValues[category.name] || ""}
-                    onChange={(e) =>
-                      console.log("Hello")
-                    }
+                    onChange={(e) => console.log("Hello")}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">£</InputAdornment>
