@@ -13,7 +13,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
-  
+
   const [categoryValues, setCategoryValues] = useState({});
   const [categories, setCategories] = useState(['Shopping']);
 
@@ -36,7 +36,8 @@ export const BudgetEditTable = () => {
   };
 
   return (
-    <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
+    isAuthenticated && (
+      <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
       <Typography variant="h6">Edit Your Budgets</Typography>
       <TableContainer>
         <Table aria-label="Budget Table">
@@ -76,5 +77,6 @@ export const BudgetEditTable = () => {
         handleCategorySelect={handleCategorySelect}
       />
     </Paper>
+    )
   );
 };
