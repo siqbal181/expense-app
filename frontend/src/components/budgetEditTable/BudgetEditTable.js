@@ -16,7 +16,7 @@ export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
 
   const [categoryValues, setCategoryValues] = useState({});
-  const [categories, setCategories] = useState(['Shopping']);
+  const [categories, setCategories] = useState(['Bills']);
 
   const allCategories = ['Shopping', 'Bills', 'Groceries', 'Rent', 'Leisure', 'Holidays'];
 
@@ -41,10 +41,12 @@ export const BudgetEditTable = () => {
       category,
       amount: categoryValues[category] || 0,
     }));
-
+  
+    const newBudgetData = [...updatedBudgets];
     budgetData.length = 0;
-    Array.prototype.push.apply(budgetData, updatedBudgets);
+    Array.prototype.push.apply(budgetData, newBudgetData);
   };
+
   return (
     isAuthenticated && (
       <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
