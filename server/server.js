@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Connect to MongoDB using Mongoose
-const dbURI = 'mongodb+srv://sidra:8cLQDlmR7W5CfHfO@expense-app.hzsnzwi.mongodb.net/?retryWrites=true&w=majority';
+const dbURI = `mongodb+srv://sidra:${process.env.mongopw}@expense-app.hzsnzwi.mongodb.net/?retryWrites=true&w=majority`;
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
