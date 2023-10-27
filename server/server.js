@@ -2,7 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const MonthlyBudget = require('./models/monthlyBudget');
+const budgetRoutes = require('./routes/budgetRoutes');
+const spendRoutes = require('./routes/spendRoutes');
+
 require("dotenv").config({ path: './config.env' });
 
 // Create an Express app
@@ -26,18 +28,6 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     console.error('Error connecting to MongoDB: ' + err);
   });
 
-// routes
-app.get('/save-budget', (req, res) => {
-  const monthlyBudget = new MonthlyBudget({
-    category: 'Shopping',
-    budget: 24
-  });
 
-  monthlyBudget.save()
-    .then((result) => {
-      res.send(result)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-})
+  app.use('/budget', budgetRoutes);
+  app.use('/spend', spendRoutes);
