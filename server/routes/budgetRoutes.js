@@ -19,8 +19,15 @@ router.get('/', (req, res) => {
 })
 
 // Post a new budget
-router.post('/', (req, res) => {
-  res.json({mssg: 'POST a New Budget'})
+router.post('/', async (req, res) => {
+  const { category, budget } = req.body
+
+  try {
+    const monthlyBudget = await MonthlyBudget.create({category, budget})
+    res.status(200).json(monthlyBudget);
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
 })
 
 // Update the monthly budget
