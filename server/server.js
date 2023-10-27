@@ -15,9 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB using Mongoose
-const dbURI = `mongodb+srv://sidra:${process.env.mongopw}@expense-app.hzsnzwi.mongodb.net/?retryWrites=true&w=majority`;
-
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
