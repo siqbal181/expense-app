@@ -28,6 +28,9 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     console.error('Error connecting to MongoDB: ' + err);
   });
 
+app.get('/', (req, res) => {
+  res.send('Root of application')
+})
 
-  app.use('/budget', budgetRoutes);
-  app.use('/spend', spendRoutes);
+app.use('/save-budget', budgetRoutes);
+app.use('/save-monthly-spend', spendRoutes);
