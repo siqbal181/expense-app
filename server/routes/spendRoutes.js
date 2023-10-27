@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const MonthlySpend = require('../models/monthlySpend')
+const MonthlySpend = require('../models/monthlySpendModel')
 
 router.get('/', (req, res) => {
   const monthlySpend = new MonthlySpend({
