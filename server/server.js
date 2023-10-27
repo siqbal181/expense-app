@@ -5,11 +5,11 @@ const cors = require("cors");
 const budgetRoutes = require('./routes/budgetRoutes');
 const spendRoutes = require('./routes/spendRoutes');
 
-require("dotenv").config({ path: './config.env' });
+require("dotenv").config();
 
 // Create an Express app
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // Middleware
 app.use(cors());
