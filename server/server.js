@@ -1,23 +1,26 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const cors = require("cors");
-require("dotenv").config({ path: './config.env'});
+require("dotenv").config({ path: './config.env' });
 
+// Create an Express app
 const app = express();
-
 const port = process.env.PORT || 5000;
 
+// Middleware
 app.use(cors());
-app.use(express.json());
-app.use(require("./routes/record"));
+app.use(bodyParser.json());
 
-// get driver connection
-const dbo = require("./db/conn");
+// Connect to MongoDB using Mongoose
+const dbURI = 'mongodb+srv://sidra:your-password@expense-app.hzsnzwi.mongodb.net/?retryWrites=true&w=majority';
 
-app.listen(port, () => {
-
-  // perform database connection when server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.log(err);
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB: ' + err);
   });
-  console.log(`Server is running on port: ${port}`);
-})
