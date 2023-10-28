@@ -9,13 +9,14 @@ const getMonthlyBudget = async (req, res) => {
 
 // create a monthly budget
 const createMonthlyBudget = async (req, res) => {
-  const { category, budget } = req.body
-
+  const { category, budget } = req.body;
+  console.log(req.body)
+  const monthlyBudget = new MonthlyBudget({ category, budget });
   try {
-    const monthlyBudget = await MonthlyBudget.create({category, budget})
-    res.status(200).json(monthlyBudget);
+    const result = await monthlyBudget.save();
+    res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({error: error.message})
+    res.status(400).json({ error: error.message });
   }
 }
 
