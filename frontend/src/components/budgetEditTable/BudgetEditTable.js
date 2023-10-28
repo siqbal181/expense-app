@@ -37,7 +37,15 @@ export const BudgetEditTable = () => {
   };
 
   const handleSubmit = async (categories, categoryValues) => {
-    const newBudget = {categories, categoryValues};
+
+    categories.map((category) => {
+      console.log(categoryValues[category], category)
+    })
+
+    const newBudget = categories.map((category) => ({
+      category,
+      budget: parseFloat(categoryValues[category]),
+    }));
 
     const response = await fetch('http://localhost:4000/save-budget', {
       method: 'POST',
