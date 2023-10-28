@@ -10,7 +10,6 @@ const getMonthlyBudget = async (req, res) => {
 // create a monthly budget
 const createMonthlyBudget = async (req, res) => {
   const budgetData = req.body
-  console.log(budgetData)
 
   try {
     const result = await Promise.all(
