@@ -1,7 +1,7 @@
 import './App.css';
 import { BudgetEditTable } from './components/budgetEditTable/BudgetEditTable';
 import Navbar from './components/navbar/Navbar';
-import { CurrentBudgets } from './components/budgetInputs/CurrentBudgets';
+import { CurrentBudgets } from './components/currentBudgetsTable/CurrentBudgets';
 
 function App() {
   return (

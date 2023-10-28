@@ -10,7 +10,6 @@ import TableRow from "@mui/material/TableRow";
 import { InputAdornment, Typography } from "@mui/material";
 import { CategorySelectButton } from "./CategorySelectButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import { budgetData } from "../../budgetData";
 
 export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
@@ -37,14 +36,14 @@ export const BudgetEditTable = () => {
   };
 
   const saveBudgets = () => {
-    const updatedBudgets = categories.map((category) => ({
-      category,
-      amount: categoryValues[category] || 0,
-    }));
+    // const updatedBudgets = categories.map((category) => ({
+    //   category,
+    //   amount: categoryValues[category] || 0,
+    // }));
   
-    const newBudgetData = [...updatedBudgets];
-    budgetData.length = 0;
-    Array.prototype.push.apply(budgetData, newBudgetData);
+    // const newBudgetData = [...updatedBudgets];
+    // budgetData.length = 0;
+    // Array.prototype.push.apply(budgetData, newBudgetData);
   };
 
   return (
