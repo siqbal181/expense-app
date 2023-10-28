@@ -9,17 +9,23 @@ const getMonthlyBudget = async (req, res) => {
 
 // create a monthly budget
 const createMonthlyBudget = async (req, res) => {
-  const { category, budget } = req.body;
-  console.log(req.body)
-  const monthlyBudget = new MonthlyBudget({ category, budget });
+  const budgetData = req.body
+  console.log(budgetData)
+
   try {
-    const result = await monthlyBudget.save();
+    const result = await Promise.all(
+      budgetData.map(async (budgetItem) => {
+        const { category, budget } = budgetItem;
+        const monthlyBudget = new MonthlyBudget({ category, budget });
+        console.log(budgetItem);
+        return await monthlyBudget.save();
+      })
+    );
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 }
-
 // update the budget
 
 // delete single elements from the budget

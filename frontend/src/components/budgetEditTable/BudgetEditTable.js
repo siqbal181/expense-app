@@ -51,18 +51,23 @@ export const BudgetEditTable = () => {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-
-    const json = await response.json()
-
-    if (!response.ok) {
-      setError(json.error)
-    }
-    if (response.ok) {
-      setError(null);
-      setCategoryValues({}); 
-      setCategories([]); 
-      console.log('Budget Saved', json);
+    });
+    
+    const textResponse = await response.text();
+    console.log('Response from server:', textResponse);
+    
+    try {
+      const json = JSON.parse(textResponse);
+      if (response.ok) {
+        setError(null);
+        setCategoryValues({});
+        setCategories([]);
+        console.log('Budget Saved', json);
+      } else {
+        setError(json.error);
+      }
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
     }
   };
 
