@@ -10,9 +10,11 @@ import TableRow from "@mui/material/TableRow";
 import { InputAdornment, Typography } from "@mui/material";
 import { CategorySelectButton } from "./CategorySelectButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
 export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
+  const { dispatch } = useBudgetsContext()
 
   const [categoryValues, setCategoryValues] = useState({});
   const [categories, setCategories] = useState([]);
@@ -63,6 +65,7 @@ export const BudgetEditTable = () => {
         setCategoryValues({});
         setCategories([]);
         console.log('Budget Saved', json);
+        dispatch({type: 'CREATE_BUDGET', payload: json})
       } else {
         setError(json.error);
       }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -8,10 +8,11 @@ import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
 export const CurrentBudgets = () => {
-  const [budgets, setBudgets] = useState(null)
   const { isAuthenticated } = useAuth0();
+  const {budgets, dispatch} = useBudgetsContext();
 
   useEffect(() => {
     const fetchCurrentBudgets = async() => {
@@ -19,7 +20,7 @@ export const CurrentBudgets = () => {
       const json = await response.json();
 
       if (response.ok) {
-        setBudgets(json)
+        dispatch({type: 'SET_BUDGETS', payload: json})
       }
     }
 
