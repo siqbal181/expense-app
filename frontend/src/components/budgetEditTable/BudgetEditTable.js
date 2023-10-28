@@ -15,7 +15,8 @@ export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
 
   const [categoryValues, setCategoryValues] = useState({});
-  const [categories, setCategories] = useState(['Bills']);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
   const allCategories = ['Shopping', 'Bills', 'Groceries', 'Rent', 'Leisure', 'Holidays'];
 
@@ -35,15 +36,28 @@ export const BudgetEditTable = () => {
     addCategory(selectedCategory);
   };
 
-  const saveBudgets = () => {
-    // const updatedBudgets = categories.map((category) => ({
-    //   category,
-    //   amount: categoryValues[category] || 0,
-    // }));
-  
-    // const newBudgetData = [...updatedBudgets];
-    // budgetData.length = 0;
-    // Array.prototype.push.apply(budgetData, newBudgetData);
+  const handleSubmit = async (categories, categoryValues) => {
+    const newBudget = {categories, categoryValues};
+
+    const response = await fetch('http://localhost:4000/save-budget', {
+      method: 'POST',
+      body: JSON.stringify(newBudget),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const json = await response.json()
+
+    if (!response.ok) {
+      setError(json.error)
+    }
+    if (response.ok) {
+      setError(null);
+      setCategoryValues({}); 
+      setCategories([]); 
+      console.log('Budget Saved', json);
+    }
   };
 
   return (
@@ -79,7 +93,7 @@ export const BudgetEditTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }} onClick={saveBudgets(categories, categoryValues)}>
+      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }} onClick={() => handleSubmit(categories, categoryValues)}>
         Submit
       </Button>
       <CategorySelectButton
