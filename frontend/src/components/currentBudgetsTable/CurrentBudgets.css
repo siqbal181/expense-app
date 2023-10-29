@@ -31,12 +31,9 @@
 }
 
 /* Style the parent container */
-/* .bottom-row {
+ .bottom-row {
   display: flex;
   justify-content: space-between;
   align-items: center; 
+  padding-top: 15px;
 }
-
-.left-content {
-  flex: 1;
-} */
