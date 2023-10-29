@@ -49,6 +49,16 @@ export const CurrentBudgets = () => {
     setSaveEnabled(false);
   }
 
+  const handleDeleteBudget = async (budgetItemId) => {
+    const response = await fetch('http://localhost:4000/save-budget', {
+      method: 'PATCH',
+      body: budgetItemId,
+      headers: {
+        "Content-Type": "application-json"
+      }
+    })
+  }
+
   return (
     isAuthenticated && (
       <div>
@@ -73,7 +83,7 @@ export const CurrentBudgets = () => {
                     <DeleteIcon
                         onClick={() => {
                           if (isDeleteEnabled) {
-                            // Handle delete logic here
+                            // handleDeleteBudget(budgetItem._id)
                           }
                         }}
                         className={isDeleteEnabled ? "delete-enabled" : "delete-disabled"}
