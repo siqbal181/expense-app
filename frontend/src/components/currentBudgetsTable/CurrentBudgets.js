@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -17,6 +17,7 @@ import './CurrentBudgets.css'
 export const CurrentBudgets = () => {
   const { isAuthenticated } = useAuth0();
   const {budgets, dispatch} = useBudgetsContext();
+  const [isDeleteEnabled, setDeleteEnabled] = useState(false)
 
   useEffect(() => {
     const fetchCurrentBudgets = async() => {
@@ -31,6 +32,10 @@ export const CurrentBudgets = () => {
     fetchCurrentBudgets();
   }, [budgets])
 
+  const toggleDeleteEnabled = () => {
+    setDeleteEnabled(true);
+  }
+
   return (
     isAuthenticated && (
       <div>
@@ -39,7 +44,10 @@ export const CurrentBudgets = () => {
             <div className="title-container">
               <Typography variant="h6">Your Monthly Budgets</Typography>
             </div>
-            <EditIcon />
+            <EditIcon
+              onClick={toggleDeleteEnabled}
+              className={isDeleteEnabled ? "edit-enabled" : "edit-disabled"}
+            />
           </div>
           <TableContainer>
             <Table aria-label="Budget Table">
@@ -49,7 +57,14 @@ export const CurrentBudgets = () => {
                     <TableCell>{budgetItem.category}</TableCell>
                     <TableCell>{budgetItem.budget}</TableCell>
                     <TableCell>
-                    <DeleteIcon/>
+                    <DeleteIcon
+                        onClick={() => {
+                          if (isDeleteEnabled) {
+                            // Handle delete logic here
+                          }
+                        }}
+                        className={isDeleteEnabled ? "enabled" : "disabled"}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

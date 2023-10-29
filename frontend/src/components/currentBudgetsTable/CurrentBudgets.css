@@ -1,3 +1,4 @@
+/* The Top row title and edit icon */
 .top-row {
   display: flex;
   align-items: center; 
@@ -6,4 +7,24 @@
 
 .title-container {
   flex: 1; 
+}
+
+/* Edit and Delete Icons */
+.edit-enabled {
+  cursor: pointer; /* Change the cursor to a pointer when enabled */
+  color: blue; /* Change the color when enabled */
+}
+
+.edit-disabled {
+  color: gray; /* Change the color when disabled */
+}
+
+.enabled {
+  cursor: pointer; /* Change the cursor to a pointer when enabled */
+}
+
+.disabled {
+  cursor: not-allowed; /* Use the not-allowed cursor when disabled */
+  pointer-events: none; /* Disable pointer events when disabled */
+  opacity: 0.5; /* Apply some opacity to indicate it's disabled */
 }
