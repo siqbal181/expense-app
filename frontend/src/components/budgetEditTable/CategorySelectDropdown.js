@@ -21,19 +21,23 @@ export const CategorySelectDropdown = ({ allCategories, selectedCategories, hand
   const categoryMessaging = (unusedCategories) => {
     if (unusedCategories.length === 0) {
       return (
-        <Typography>Select a Category</Typography>
+        <Typography>No categories left</Typography>
       ) 
     } else {
       return (
-        <Typography>No Categories Left</Typography>
+        <Typography>Select a category</Typography>
       )
     }
   }
 
   return (
-    <Select value="" onChange={handleCategoryChange}>
+    <Select
+      value={selectedCategories} // Set the value to the selected category
+      onChange={handleCategoryChange}
+      style={{ width: "140px" }}
+    >
       <MenuItem value="" disabled>
-        {categoryMessaging(selectedCategories)}
+        {categoryMessaging(unusedCategories)}
       </MenuItem>
       {unusedCategories.map((category) => (
         <MenuItem key={category} value={category}>

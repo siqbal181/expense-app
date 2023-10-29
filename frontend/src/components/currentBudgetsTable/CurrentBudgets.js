@@ -64,7 +64,7 @@ export const CurrentBudgets = () => {
   return (
     isAuthenticated && (
       <div>
-        <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
+        <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
               <Typography variant="h6">Your Monthly Budgets</Typography>

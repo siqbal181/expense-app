@@ -100,8 +100,11 @@ export const BudgetEditTable = () => {
                     allCategories={allCategories}
                     selectedCategories={categories}
                     handleCategorySelect={handleCategorySelect}
+                    style={{ width: "5rem" }} 
+
                   />
                 </TableCell>
+                <div className="budget-text">
                 <TableCell>
                   <TextField
                     variant="outlined"
@@ -121,6 +124,7 @@ export const BudgetEditTable = () => {
                     }}
                   />
                 </TableCell>
+                </div>
                 <TableCell>
                   <IconButton onClick={() => deleteCategory(category)}>
                     <DeleteIcon />
@@ -135,6 +139,7 @@ export const BudgetEditTable = () => {
                     allCategories={allCategories}
                     selectedCategories={categories}
                     handleCategorySelect={handleAddRow}
+                    style={{ width: "200px" }} 
                   />
                 </TableCell>
                 <TableCell>
