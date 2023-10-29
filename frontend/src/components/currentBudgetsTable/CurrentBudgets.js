@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
@@ -17,7 +18,8 @@ import './CurrentBudgets.css'
 export const CurrentBudgets = () => {
   const { isAuthenticated } = useAuth0();
   const {budgets, dispatch} = useBudgetsContext();
-  const [isDeleteEnabled, setDeleteEnabled] = useState(false)
+  const [isDeleteEnabled, setDeleteEnabled] = useState(false);
+  const [isSaveEnabled, setSaveEnabled] = useState(false);
 
   useEffect(() => {
     const fetchCurrentBudgets = async() => {
@@ -32,8 +34,19 @@ export const CurrentBudgets = () => {
     fetchCurrentBudgets();
   }, [budgets])
 
-  const toggleDeleteEnabled = () => {
-    setDeleteEnabled(true);
+  const toggleEditActions = () => {
+    if (isDeleteEnabled && isSaveEnabled) {
+      setDeleteEnabled(false);
+      setSaveEnabled(false)
+    } else {
+      setDeleteEnabled(true);
+      setSaveEnabled(true);
+    }
+  }
+
+  const handleSaveChanges = () => {
+    setDeleteEnabled(false);
+    setSaveEnabled(false);
   }
 
   return (
@@ -45,7 +58,7 @@ export const CurrentBudgets = () => {
               <Typography variant="h6">Your Monthly Budgets</Typography>
             </div>
             <EditIcon
-              onClick={toggleDeleteEnabled}
+              onClick={toggleEditActions}
               className={isDeleteEnabled ? "edit-enabled" : "edit-disabled"}
             />
           </div>
@@ -63,7 +76,7 @@ export const CurrentBudgets = () => {
                             // Handle delete logic here
                           }
                         }}
-                        className={isDeleteEnabled ? "enabled" : "disabled"}
+                        className={isDeleteEnabled ? "delete-enabled" : "delete-disabled"}
                       />
                     </TableCell>
                   </TableRow>
@@ -72,6 +85,15 @@ export const CurrentBudgets = () => {
             </Table>
           </TableContainer>
           <BudgetEditTable/>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: 23, margin: 4 }}
+            disabled={!isSaveEnabled} // Disable if isSaveEnabled is false
+            onClick={handleSaveChanges} // Call handleSaveChanges on click
+          >
+            Save Changes
+          </Button>
         </Paper>
       </div>
     )

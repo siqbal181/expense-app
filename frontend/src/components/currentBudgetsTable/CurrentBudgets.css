@@ -12,18 +12,18 @@
 /* Edit and Delete Icons */
 .edit-enabled {
   cursor: pointer; /* Change the cursor to a pointer when enabled */
-  color: blue; /* Change the color when enabled */
 }
 
 .edit-disabled {
+  cursor: pointer;
   color: gray; /* Change the color when disabled */
 }
 
-.enabled {
+.delete-enabled {
   cursor: pointer; /* Change the cursor to a pointer when enabled */
 }
 
-.disabled {
+.delete-disabled {
   cursor: not-allowed; /* Use the not-allowed cursor when disabled */
   pointer-events: none; /* Disable pointer events when disabled */
   opacity: 0.5; /* Apply some opacity to indicate it's disabled */
