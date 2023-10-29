@@ -14,13 +14,20 @@ import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
 export const BudgetEditTable = () => {
   const { isAuthenticated } = useAuth0();
-  const { dispatch } = useBudgetsContext()
+  const { dispatch } = useBudgetsContext();
 
   const [categoryValues, setCategoryValues] = useState({});
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
 
-  const allCategories = ['Shopping', 'Bills', 'Groceries', 'Rent', 'Leisure', 'Holidays'];
+  const allCategories = [
+    "Shopping",
+    "Bills",
+    "Groceries",
+    "Rent",
+    "Leisure",
+    "Holidays",
+  ];
 
   const addCategory = (category) => {
     if (!categories.includes(category)) {
@@ -39,45 +46,42 @@ export const BudgetEditTable = () => {
   };
 
   const handleSubmit = async (categories, categoryValues) => {
-
     const newBudget = categories.map((category) => ({
       category,
       budget: parseFloat(categoryValues[category]),
     }));
 
-    console.log(newBudget)
+    console.log(newBudget);
 
-    const response = await fetch('http://localhost:4000/save-budget', {
-      method: 'POST',
+    const response = await fetch("http://localhost:4000/save-budget", {
+      method: "POST",
       body: JSON.stringify(newBudget),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
-    
+
     const textResponse = await response.text();
-    console.log('Response from server:', textResponse);
-    
+    console.log("Response from server:", textResponse);
+
     try {
       const json = JSON.parse(textResponse);
       if (response.ok) {
         setError(null);
         setCategoryValues({});
         setCategories([]);
-        console.log('Budget Saved', json);
-        dispatch({type: 'CREATE_BUDGET', payload: json})
+        console.log("Budget Saved", json);
+        dispatch({ type: "CREATE_BUDGET", payload: json });
       } else {
         setError(json.error);
       }
     } catch (error) {
-      console.error('Error parsing JSON:', error);
+      console.error("Error parsing JSON:", error);
     }
   };
 
   return (
-    isAuthenticated && (
-      <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
-      <Typography variant="h6">Edit Your Budgets</Typography>
+    <>
       <TableContainer>
         <Table aria-label="Budget Table">
           <TableBody>
@@ -90,7 +94,10 @@ export const BudgetEditTable = () => {
                     value={categoryValues[category] || ""}
                     onChange={(e) => {
                       const newValue = e.target.value;
-                      setCategoryValues({ ...categoryValues, [category]: newValue });
+                      setCategoryValues({
+                        ...categoryValues,
+                        [category]: newValue,
+                      });
                     }}
                     InputProps={{
                       startAdornment: (
@@ -99,7 +106,12 @@ export const BudgetEditTable = () => {
                     }}
                   />
                   <div className="trash-icon">
-                    <i className="material-icons" onClick={() => deleteCategory(category)}>delete</i>
+                    <i
+                      className="material-icons"
+                      onClick={() => deleteCategory(category)}
+                    >
+                      delete
+                    </i>
                   </div>
                 </TableCell>
               </TableRow>
@@ -107,7 +119,12 @@ export const BudgetEditTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="primary" style={{ marginTop: 23, margin: 4 }} onClick={() => handleSubmit(categories, categoryValues)}>
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ marginTop: 23, margin: 4 }}
+        onClick={() => handleSubmit(categories, categoryValues)}
+      >
         Submit
       </Button>
       <CategorySelectButton
@@ -115,7 +132,6 @@ export const BudgetEditTable = () => {
         selectedCategories={categories}
         handleCategorySelect={handleCategorySelect}
       />
-    </Paper>
-    )
+    </>
   );
 };
