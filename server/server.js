@@ -36,5 +36,5 @@ app.get('/', (req, res) => {
   res.send('Root of application')
 })
 
-app.use('/save-budget', budgetRoutes);
+app.use('/budgets', budgetRoutes);
 app.use('/save-monthly-spend', spendRoutes);

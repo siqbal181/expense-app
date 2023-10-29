@@ -48,7 +48,7 @@ export const BudgetEditTable = () => {
       budget: parseFloat(categoryValues[category]),
     }));
 
-    const response = await fetch("http://localhost:4000/save-budget", {
+    const response = await fetch("http://localhost:4000/budgets/save-budget", {
       method: "POST",
       body: JSON.stringify(newBudget),
       headers: {

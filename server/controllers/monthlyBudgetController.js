@@ -1,14 +1,14 @@
 const MonthlyBudget = require('../models/monthlyBudgetModel');
 
 // get the monthly budget
-const getMonthlyBudget = async (req, res) => {
+const getBudget = async (req, res) => {
   const monthlyBudget = await MonthlyBudget.find({})
 
   res.status(200).json(monthlyBudget);
 }
 
 // create a monthly budget
-const createMonthlyBudget = async (req, res) => {
+const saveBudget = async (req, res) => {
   const budgetData = req.body
 
   try {
@@ -27,8 +27,22 @@ const createMonthlyBudget = async (req, res) => {
 }
 // update the budget
 
-// delete single elements from the budget
+const deleteBudget = async (req, res) => {
+  const id = req.params.id; 
+  try {
+    const monthlyBudget = await MonthlyBudget.findByIdAndDelete(id);
+
+    if (!monthlyBudget) {
+      return res.status(404).json({ error: 'Budget not found' });
+    }
+
+    res.status(200).json({ message: 'Budget deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 // update a single element from the budget
 
-module.exports = {createMonthlyBudget, getMonthlyBudget};
+module.exports = {saveBudget, getBudget, deleteBudget};

@@ -23,7 +23,7 @@ export const CurrentBudgets = () => {
 
   useEffect(() => {
     const fetchCurrentBudgets = async() => {
-      const response = await fetch('http://localhost:4000/save-budget')
+      const response = await fetch('http://localhost:4000/budgets/')
       const json = await response.json();
 
       if (response.ok) {
@@ -32,7 +32,7 @@ export const CurrentBudgets = () => {
     }
 
     fetchCurrentBudgets();
-  }, [budgets])
+  }, [])
 
   const toggleEditActions = () => {
     if (isDeleteEnabled && isSaveEnabled) {
@@ -50,13 +50,15 @@ export const CurrentBudgets = () => {
   }
 
   const handleDeleteBudget = async (budgetItemId) => {
-    const response = await fetch('http://localhost:4000/save-budget', {
-      method: 'PATCH',
-      body: budgetItemId,
-      headers: {
-        "Content-Type": "application-json"
-      }
+    const response = await fetch(`http://localhost:4000/budgets/delete-budget/${budgetItemId}`, {
+      method: 'DELETE',
     })
+    
+    if (response.ok) {
+      console.log('BudgetItem deleted successfully');
+    } else {
+      console.error('Failed to delete budgetItem');
+    }
   }
 
   return (
@@ -83,7 +85,7 @@ export const CurrentBudgets = () => {
                     <DeleteIcon
                         onClick={() => {
                           if (isDeleteEnabled) {
-                            // handleDeleteBudget(budgetItem._id)
+                            handleDeleteBudget(budgetItem._id)
                           }
                         }}
                         className={isDeleteEnabled ? "delete-enabled" : "delete-disabled"}
