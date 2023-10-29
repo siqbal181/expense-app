@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import DeleteIcon from '@mui/icons-material/Delete';
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import { InputAdornment } from "@mui/material";
-import { CategorySelectButton } from "./CategorySelectButton";
+import {
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TextField,
+  InputAdornment,
+  Button,
+  IconButton,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
-import './BudgetEditTable.css'
+import { CategorySelectButton } from "./CategorySelectButton";
 
 export const BudgetEditTable = () => {
   const { dispatch } = useBudgetsContext();
@@ -18,6 +21,7 @@ export const BudgetEditTable = () => {
   const [categoryValues, setCategoryValues] = useState({});
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
 
   const allCategories = [
     "Shopping",
@@ -38,6 +42,15 @@ export const BudgetEditTable = () => {
   const deleteCategory = (category) => {
     const updatedCategories = categories.filter((cat) => cat !== category);
     setCategories(updatedCategories);
+  };
+
+  const handleAddCategoryClick = () => {
+    setIsAddingCategory(true);
+  };
+
+  const handleAddRow = (selectedCategory) => {
+    setIsAddingCategory(false);
+    addCategory(selectedCategory);
   };
 
   const handleCategorySelect = (selectedCategory) => {
@@ -82,51 +95,85 @@ export const BudgetEditTable = () => {
           <TableBody>
             {categories.map((category) => (
               <TableRow key={category}>
-                <TableCell>{category}</TableCell>
                 <TableCell>
-                  <div className="input-and-icon-container">
-                    <div className="budget-text">
-                    <TextField
-                      variant="outlined"
-                      style={{ maxWidth: '5rem' }}
-                      value={categoryValues[category] || ""}
-                      onChange={(e) => {
-                        const newValue = e.target.value;
-                        setCategoryValues({
-                          ...categoryValues,
-                          [category]: newValue,
-                        });
-                      }}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">£</InputAdornment>
-                        ),
-                      }}
-                    />
-                  </div>
-                  <div className="delete-icon-container">
-                    <DeleteIcon onClick={() => deleteCategory(category)} />
-                  </div>
-                  </div>
+                  <CategorySelectButton
+                    allCategories={allCategories}
+                    selectedCategories={categories}
+                    handleCategorySelect={handleCategorySelect}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    variant="outlined"
+                    style={{ maxWidth: "5rem" }}
+                    value={categoryValues[category] || ""}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setCategoryValues({
+                        ...categoryValues,
+                        [category]: newValue,
+                      });
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">£</InputAdornment>
+                      ),
+                    }}
+                  />
+                </TableCell>
+                <TableCell>
+                  <IconButton onClick={() => deleteCategory(category)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
+            {isAddingCategory && (
+              <TableRow>
+                <TableCell>
+                  <CategorySelectButton
+                    allCategories={allCategories}
+                    selectedCategories={categories}
+                    handleCategorySelect={handleAddRow}
+                  />
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    variant="outlined"
+                    style={{ maxWidth: "5rem" }}
+                    value={categoryValues["newCategory"] || ""}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setCategoryValues({
+                        ...categoryValues,
+                        newCategory: newValue,
+                      });
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">£</InputAdornment>
+                      ),
+                    }}
+                  />
+                </TableCell>
+                <TableCell>
+                  <IconButton onClick={() => deleteCategory("newCategory")}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddCategoryClick}
+        >
+          <AddIcon />
+          Add Category
+        </Button>
       </TableContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ marginTop: 23, margin: 4 }}
-        onClick={() => handleSubmit(categories, categoryValues)}
-      >
-        Submit
-      </Button>
-      <CategorySelectButton
-        allCategories={allCategories}
-        selectedCategories={categories}
-        handleCategorySelect={handleCategorySelect}
-      />
     </>
   );
 };
