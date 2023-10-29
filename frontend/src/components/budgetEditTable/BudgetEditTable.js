@@ -13,7 +13,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
-import { CategorySelectButton } from "./CategorySelectButton";
+import { CategorySelectDropdown } from "./CategorySelectDropdown";
 
 export const BudgetEditTable = () => {
   const { dispatch } = useBudgetsContext();
@@ -96,7 +96,7 @@ export const BudgetEditTable = () => {
             {categories.map((category) => (
               <TableRow key={category}>
                 <TableCell>
-                  <CategorySelectButton
+                  <CategorySelectDropdown
                     allCategories={allCategories}
                     selectedCategories={categories}
                     handleCategorySelect={handleCategorySelect}
@@ -131,7 +131,7 @@ export const BudgetEditTable = () => {
             {isAddingCategory && (
               <TableRow>
                 <TableCell>
-                  <CategorySelectButton
+                  <CategorySelectDropdown
                     allCategories={allCategories}
                     selectedCategories={categories}
                     handleCategorySelect={handleAddRow}

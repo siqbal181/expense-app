@@ -2,7 +2,7 @@ import React from "react";
 import { Select, MenuItem, Typography } from "@mui/material";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
-export const CategorySelectButton = ({ allCategories, selectedCategories, handleCategorySelect }) => {
+export const CategorySelectDropdown = ({ allCategories, selectedCategories, handleCategorySelect }) => {
   const { budgets } = useBudgetsContext();
 
   const budgetCategories = budgets.map((budgetItem) => budgetItem.category);
