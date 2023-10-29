@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem, Typography } from "@mui/material";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
 export const CategorySelectButton = ({ allCategories, selectedCategories, handleCategorySelect }) => {
@@ -18,10 +18,22 @@ export const CategorySelectButton = ({ allCategories, selectedCategories, handle
     }
   };
 
+  const categoryMessaging = (unusedCategories) => {
+    if (unusedCategories.length === 0) {
+      return (
+        <Typography>Select a Category</Typography>
+      ) 
+    } else {
+      return (
+        <Typography>No Categories Left</Typography>
+      )
+    }
+  }
+
   return (
     <Select value="" onChange={handleCategoryChange}>
       <MenuItem value="" disabled>
-        Select a Category
+        {categoryMessaging(selectedCategories)}
       </MenuItem>
       {unusedCategories.map((category) => (
         <MenuItem key={category} value={category}>
