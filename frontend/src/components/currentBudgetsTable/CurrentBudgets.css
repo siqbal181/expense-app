@@ -28,3 +28,14 @@
   pointer-events: none; /* Disable pointer events when disabled */
   opacity: 0.5; /* Apply some opacity to indicate it's disabled */
 }
+
+/* Style the parent container */
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically align contents */
+}
+
+.left-content {
+  flex: 1; /* Takes up available space */
+}

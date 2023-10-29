@@ -96,16 +96,22 @@ export const CurrentBudgets = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <BudgetEditTable/>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ marginTop: 23, margin: 4 }}
-            disabled={!isSaveEnabled} // Disable if isSaveEnabled is false
-            onClick={handleSaveChanges} // Call handleSaveChanges on click
-          >
-            Save Changes
-          </Button>
+          <div className="bottom-row">
+          <div className="left-content">
+            <BudgetEditTable />
+          </div>
+          <div className="right-content">
+            <Button
+              className="save-changes-button"
+              variant="contained"
+              color="primary"
+              disabled={!isSaveEnabled}
+              onClick={handleSaveChanges}
+            >
+              Save Changes
+            </Button>
+          </div>
+        </div>
         </Paper>
       </div>
     )
