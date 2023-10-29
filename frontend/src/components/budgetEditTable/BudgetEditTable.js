@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-import { InputAdornment, Typography } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import { CategorySelectButton } from "./CategorySelectButton";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
 export const BudgetEditTable = () => {
-  const { isAuthenticated } = useAuth0();
   const { dispatch } = useBudgetsContext();
 
   const [categoryValues, setCategoryValues] = useState({});
@@ -51,8 +48,6 @@ export const BudgetEditTable = () => {
       budget: parseFloat(categoryValues[category]),
     }));
 
-    console.log(newBudget);
-
     const response = await fetch("http://localhost:4000/save-budget", {
       method: "POST",
       body: JSON.stringify(newBudget),
@@ -62,7 +57,6 @@ export const BudgetEditTable = () => {
     });
 
     const textResponse = await response.text();
-    console.log("Response from server:", textResponse);
 
     try {
       const json = JSON.parse(textResponse);
@@ -70,7 +64,6 @@ export const BudgetEditTable = () => {
         setError(null);
         setCategoryValues({});
         setCategories([]);
-        console.log("Budget Saved", json);
         dispatch({ type: "CREATE_BUDGET", payload: json });
       } else {
         setError(json.error);
