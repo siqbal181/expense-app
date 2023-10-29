@@ -10,6 +10,9 @@ import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 import { BudgetEditTable } from "../budgetEditTable/BudgetEditTable";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import './CurrentBudgets.css'
 
 export const CurrentBudgets = () => {
   const { isAuthenticated } = useAuth0();
@@ -32,7 +35,12 @@ export const CurrentBudgets = () => {
     isAuthenticated && (
       <div>
         <Paper elevation={1} style={{ padding: 20, maxWidth: 400 }}>
-          <Typography variant="h6">Your Monthly Budgets</Typography>
+          <div className="top-row">
+            <div className="title-container">
+              <Typography variant="h6">Your Monthly Budgets</Typography>
+            </div>
+            <EditIcon />
+          </div>
           <TableContainer>
             <Table aria-label="Budget Table">
               <TableBody>
@@ -40,6 +48,9 @@ export const CurrentBudgets = () => {
                   <TableRow key={budgetItem._id}>
                     <TableCell>{budgetItem.category}</TableCell>
                     <TableCell>{budgetItem.budget}</TableCell>
+                    <TableCell>
+                    <DeleteIcon/>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
