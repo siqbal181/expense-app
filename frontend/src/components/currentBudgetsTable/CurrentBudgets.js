@@ -25,7 +25,7 @@ export const CurrentBudgets = () => {
     }
 
     fetchCurrentBudgets();
-  }, [])
+  }, [budgets])
 
   return (
     isAuthenticated && (

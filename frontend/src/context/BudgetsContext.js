@@ -10,7 +10,7 @@ export const budgetsReducer = (state, action) => {
       }
     case 'CREATE_BUDGET':
       return {
-        budgets: [action.payload, ...state.budgets]
+        budgets: [...state.budgets, action.payload]
       }
     default:
       return state

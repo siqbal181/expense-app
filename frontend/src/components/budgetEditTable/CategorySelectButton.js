@@ -1,8 +1,15 @@
 import React from "react";
 import { Select, MenuItem } from "@mui/material";
+import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 
- export const CategorySelectButton = ({ allCategories, selectedCategories, handleCategorySelect }) => {
-  const unusedCategories = allCategories.filter(category => !selectedCategories.includes(category));
+export const CategorySelectButton = ({ allCategories, selectedCategories, handleCategorySelect }) => {
+  const { budgets } = useBudgetsContext();
+
+  const budgetCategories = budgets.map((budgetItem) => budgetItem.category);
+
+  const unusedCategories = allCategories.filter((category) => {
+    return !selectedCategories.includes(category) && !budgetCategories.includes(category);
+  });
 
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
