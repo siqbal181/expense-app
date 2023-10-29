@@ -27,15 +27,16 @@
   cursor: not-allowed; /* Use the not-allowed cursor when disabled */
   pointer-events: none; /* Disable pointer events when disabled */
   opacity: 0.5; /* Apply some opacity to indicate it's disabled */
+  color: white;
 }
 
 /* Style the parent container */
-.bottom-row {
+/* .bottom-row {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Vertically align contents */
+  align-items: center; 
 }
 
 .left-content {
-  flex: 1; /* Takes up available space */
-}
+  flex: 1;
+} */

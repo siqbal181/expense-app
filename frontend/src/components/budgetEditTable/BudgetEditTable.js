@@ -4,11 +4,13 @@ import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
+import DeleteIcon from '@mui/icons-material/Delete';
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import { InputAdornment } from "@mui/material";
 import { CategorySelectButton } from "./CategorySelectButton";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
+import './BudgetEditTable.css'
 
 export const BudgetEditTable = () => {
   const { dispatch } = useBudgetsContext();
@@ -82,29 +84,29 @@ export const BudgetEditTable = () => {
               <TableRow key={category}>
                 <TableCell>{category}</TableCell>
                 <TableCell>
-                  <TextField
-                    variant="outlined"
-                    value={categoryValues[category] || ""}
-                    onChange={(e) => {
-                      const newValue = e.target.value;
-                      setCategoryValues({
-                        ...categoryValues,
-                        [category]: newValue,
-                      });
-                    }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">£</InputAdornment>
-                      ),
-                    }}
-                  />
-                  <div className="trash-icon">
-                    <i
-                      className="material-icons"
-                      onClick={() => deleteCategory(category)}
-                    >
-                      delete
-                    </i>
+                  <div className="input-and-icon-container">
+                    <div className="budget-text">
+                    <TextField
+                      variant="outlined"
+                      style={{ maxWidth: '5rem' }}
+                      value={categoryValues[category] || ""}
+                      onChange={(e) => {
+                        const newValue = e.target.value;
+                        setCategoryValues({
+                          ...categoryValues,
+                          [category]: newValue,
+                        });
+                      }}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">£</InputAdornment>
+                        ),
+                      }}
+                    />
+                  </div>
+                  <div className="delete-icon-container">
+                    <DeleteIcon onClick={() => deleteCategory(category)} />
+                  </div>
                   </div>
                 </TableCell>
               </TableRow>

@@ -1,0 +1,13 @@
+.input-and-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribute elements horizontally */
+}
+
+.delete-icon-container {
+  margin-right: 50px;/* Adjust the margin value as needed */
+}
+
+.budget-text {
+  margin-left: 75px;
+}
