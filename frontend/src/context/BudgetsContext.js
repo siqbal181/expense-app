@@ -19,7 +19,7 @@ export const budgetsReducer = (state, action) => {
 
 export const BudgetsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(budgetsReducer, {
-    budgets: null
+    budgets: []
   })
 
   return (

@@ -32,7 +32,7 @@ export const CurrentBudgets = () => {
     }
 
     fetchCurrentBudgets();
-  }, [])
+  }, [dispatch])
 
   const toggleEditActions = () => {
     if (isDeleteEnabled && isSaveEnabled) {
@@ -52,14 +52,19 @@ export const CurrentBudgets = () => {
   const handleDeleteBudget = async (budgetItemId) => {
     const response = await fetch(`http://localhost:4000/budgets/delete-budget/${budgetItemId}`, {
       method: 'DELETE',
-    })
-    
+    });
+  
     if (response.ok) {
       console.log('BudgetItem deleted successfully');
+      
+      const updatedBudgets = budgets.filter((budgetItem) => budgetItem._id !== budgetItemId);
+      
+      dispatch({ type: 'SET_BUDGETS', payload: updatedBudgets });
     } else {
       console.error('Failed to delete budgetItem');
     }
   }
+  
 
   return (
     isAuthenticated && (
