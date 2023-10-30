@@ -101,21 +101,21 @@ export const CurrentBudgets = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <div className="bottom-row">
-          <div className="left-content">
-            <BudgetEditTable />
-          </div>
-          <div className="right-content">
-            <Button
-              className="save-changes-button"
-              variant="contained"
-              color="primary"
-              disabled={!isSaveEnabled}
-              onClick={handleSaveChanges}
-            >
-              Save Changes
-            </Button>
-          </div>
+          <div className="button-container">
+        <div className="left-content">
+          <BudgetEditTable />
+        </div>
+        <div className="right-content">
+          <Button
+            className="save-changes-button"
+            variant="contained"
+            color="primary"
+            disabled={!isSaveEnabled}
+            onClick={handleSaveChanges}
+          >
+            Save Changes
+          </Button>
+        </div>
         </div>
         </Paper>
       </div>

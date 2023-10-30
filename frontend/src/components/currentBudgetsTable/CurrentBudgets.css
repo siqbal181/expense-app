@@ -30,10 +30,20 @@
   color: white;
 }
 
-/* Style the parent container */
- /* .bottom-row {
+/* CSS for the parent container */
+.button-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center; 
-  padding-top: 15px;
-} */
+  align-items: flex-end;
+}
+
+
+.left-content {
+  flex: 1;
+  margin-right: 10px; 
+}
+
+.right-content {
+  flex: 1;
+}
