@@ -54,11 +54,17 @@ const NewBudgetItem = () => {
           value={newCategory}
           onChange={handleCategoryChange}
         >
-          {availableCategories.map((category) => (
-            <MenuItem key={category} value={category}>
-              {category}
+          {availableCategories.length > 0 ? (
+            availableCategories.map((category) => (
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem value="" disabled>
+              No Categories Left
             </MenuItem>
-          ))}
+          )}
         </Select>
       </TableCell>
       <TableCell>
