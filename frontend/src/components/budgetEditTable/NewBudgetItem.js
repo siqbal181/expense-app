@@ -1,0 +1,83 @@
+import React, { useState } from "react";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Input from "@mui/material/Input";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import DeleteIcon from '@mui/icons-material/Delete';
+import DoneIcon from '@mui/icons-material/Done';
+import { useBudgetsContext } from "../../hooks/useBudgetsContext";
+
+const NewBudgetItem = () => {
+  const { budgets, dispatch } = useBudgetsContext();
+  const [newCategory, setNewCategory] = useState("");
+  const [newAmount, setNewAmount] = useState("");
+
+  const allCategories = [
+    "Shopping",
+    "Bills",
+    "Groceries",
+    "Rent",
+    "Leisure",
+    "Holidays",
+  ];
+
+  const availableCategories = allCategories.filter(category => 
+    !budgets.some(budgetItem => budgetItem.category === category)
+  );
+
+  const handleCategoryChange = (event) => {
+    setNewCategory(event.target.value);
+  };
+
+  const handleAmountChange = (event) => {
+    setNewAmount(event.target.value);
+  };
+
+  const handleAddBudgetItem = () => {
+    if (newCategory && newAmount) {
+      const newBudgetItem = {
+        category: newCategory,
+        budget: parseFloat(newAmount),
+      };
+
+      dispatch({ type: 'CREATE_BUDGET', payload: newBudgetItem });
+      setNewCategory("");
+      setNewAmount("");
+    }
+  };
+
+  return (
+    <TableRow>
+      <TableCell>
+        <Select
+          value={newCategory}
+          onChange={handleCategoryChange}
+        >
+          {availableCategories.map((category) => (
+            <MenuItem key={category} value={category}>
+              {category}
+            </MenuItem>
+          ))}
+        </Select>
+      </TableCell>
+      <TableCell>
+        <Input
+          type="number"
+          value={newAmount}
+          onChange={handleAmountChange}
+        />
+      </TableCell>
+      <TableCell>
+        <DeleteIcon
+          onClick={() => handleAddBudgetItem()}
+        />
+        <DoneIcon
+          onClick={() => handleAddBudgetItem()}
+        />
+      </TableCell>
+    </TableRow>
+  );
+};
+
+export default NewBudgetItem;

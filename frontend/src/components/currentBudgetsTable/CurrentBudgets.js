@@ -11,6 +11,7 @@ import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 import { BudgetEditTable } from "../budgetEditTable/BudgetEditTable";
+import NewBudgetItem from "../budgetEditTable/NewBudgetItem";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './CurrentBudgets.css'
@@ -103,10 +104,10 @@ export const CurrentBudgets = () => {
           </TableContainer>
           <div className="button-container">
         <div className="left-content">
-          <BudgetEditTable />
+          <NewBudgetItem />
         </div>
-        <div className="right-content">
-          <Button
+        </div>
+        <Button
             className="save-changes-button"
             variant="contained"
             color="primary"
@@ -115,8 +116,6 @@ export const CurrentBudgets = () => {
           >
             Save Changes
           </Button>
-        </div>
-        </div>
         </Paper>
       </div>
     )
