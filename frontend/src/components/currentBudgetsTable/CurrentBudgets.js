@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
-import { BudgetEditTable } from "../budgetEditTable/BudgetEditTable";
 import NewBudgetItem from "../budgetEditTable/NewBudgetItem";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
