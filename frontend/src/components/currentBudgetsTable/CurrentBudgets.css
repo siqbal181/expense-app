@@ -47,3 +47,13 @@
 .right-content {
   flex: 1;
 }
+
+
+/* In your CSS file */
+.local-budget {
+  background-color: #FFFFE0; /* Light yellow */
+}
+
+.database-budget {
+  background-color: #E0E0E0; /* Light gray */
+}

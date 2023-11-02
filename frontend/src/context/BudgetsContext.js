@@ -5,12 +5,16 @@ export const BudgetsContext = createContext();
 export const budgetsReducer = (state, action) => {
   switch (action.type) {
     case 'SET_BUDGETS':
+
+    const fetchedBudgets = action.payload.map(budget => ({ ...budget, source: 'database'}))
       return {
-        budgets: action.payload
+        budgets: fetchedBudgets
       }
     case 'CREATE_BUDGET':
-      return {
-        budgets: [...state.budgets, action.payload]
+        
+        const newBudgetItem = { ...action.payload, source: 'local'};
+        return {
+        budgets: [...state.budgets, newBudgetItem]
       }
     default:
       return state

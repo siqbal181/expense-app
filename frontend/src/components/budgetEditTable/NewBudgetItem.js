@@ -39,6 +39,7 @@ const NewBudgetItem = () => {
       const newBudgetItem = {
         category: newCategory,
         budget: parseFloat(newAmount),
+        source: 'local'
       };
 
       dispatch({ type: 'CREATE_BUDGET', payload: newBudgetItem });

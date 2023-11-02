@@ -5,6 +5,7 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
+import { CheckCircle, AddCircle } from '@mui/icons-material';
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
@@ -14,6 +15,7 @@ import NewBudgetItem from "../budgetEditTable/NewBudgetItem";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './CurrentBudgets.css'
+
 
 export const CurrentBudgets = () => {
   const { isAuthenticated } = useAuth0();
@@ -83,8 +85,15 @@ export const CurrentBudgets = () => {
             <Table aria-label="Budget Table">
               <TableBody>
                 {budgets.map((budgetItem) => (
-                  <TableRow key={budgetItem._id}>
-                    <TableCell>{budgetItem.category}</TableCell>
+                  <TableRow key={budgetItem._id} className={budgetItem.source === 'database' ? 'database-budget' : 'local-budget'}>
+                  <TableCell>
+                    {budgetItem.source === 'database' ? (
+                      <CheckCircle /> // Database icon
+                    ) : (
+                      <AddCircle /> // Plus icon for local budgets
+                    )}
+                    {budgetItem.category}
+                  </TableCell>
                     <TableCell>{budgetItem.budget}</TableCell>
                     <TableCell>
                     <DeleteIcon
