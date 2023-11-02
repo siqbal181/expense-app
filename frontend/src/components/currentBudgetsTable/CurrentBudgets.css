@@ -38,17 +38,6 @@
   align-items: flex-end;
 }
 
-
-.left-content {
-  flex: 1;
-  margin-right: 10px; 
-}
-
-.right-content {
-  flex: 1;
-}
-
-
 /* In your CSS file */
 .local-budget {
   background-color: #FFFFE0; /* Light yellow */

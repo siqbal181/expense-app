@@ -1,0 +1,13 @@
+.dropdown-box {
+  width: 130px;
+  margin-right: 20px
+}
+
+.number-input {
+  width: 90px; /* Adjust the width as needed */
+  padding-left: 48px;
+}
+
+.done-icon {
+  padding-left: 53px;
+}

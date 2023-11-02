@@ -5,68 +5,70 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-import { CheckCircle, AddCircle } from '@mui/icons-material';
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 import NewBudgetItem from "../budgetEditTable/NewBudgetItem";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import './CurrentBudgets.css'
-
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./CurrentBudgets.css";
 
 export const CurrentBudgets = () => {
   const { isAuthenticated } = useAuth0();
-  const {budgets, dispatch} = useBudgetsContext();
+  const { budgets, dispatch } = useBudgetsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
 
   useEffect(() => {
-    const fetchCurrentBudgets = async() => {
-      const response = await fetch('http://localhost:4000/budgets/')
+    const fetchCurrentBudgets = async () => {
+      const response = await fetch("http://localhost:4000/budgets/");
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({type: 'SET_BUDGETS', payload: json})
+        dispatch({ type: "SET_BUDGETS", payload: json });
       }
-    }
+    };
 
     fetchCurrentBudgets();
-  }, [dispatch])
+  }, [dispatch]);
 
   const toggleEditActions = () => {
     if (isDeleteEnabled && isSaveEnabled) {
       setDeleteEnabled(false);
-      setSaveEnabled(false)
+      setSaveEnabled(false);
     } else {
       setDeleteEnabled(true);
       setSaveEnabled(true);
     }
-  }
+  };
 
   const handleSaveChanges = () => {
     setDeleteEnabled(false);
     setSaveEnabled(false);
-  }
+  };
 
   const handleDeleteBudget = async (budgetItemId) => {
-    const response = await fetch(`http://localhost:4000/budgets/delete-budget/${budgetItemId}`, {
-      method: 'DELETE',
-    });
-  
+    const response = await fetch(
+      `http://localhost:4000/budgets/delete-budget/${budgetItemId}`,
+      {
+        method: "DELETE",
+      },
+    );
+
     if (response.ok) {
-      console.log('BudgetItem deleted successfully');
-      
-      const updatedBudgets = budgets.filter((budgetItem) => budgetItem._id !== budgetItemId);
-      
-      dispatch({ type: 'SET_BUDGETS', payload: updatedBudgets });
+      console.log("BudgetItem deleted successfully");
+
+      const updatedBudgets = budgets.filter(
+        (budgetItem) => budgetItem._id !== budgetItemId,
+      );
+
+      dispatch({ type: "SET_BUDGETS", payload: updatedBudgets });
     } else {
-      console.error('Failed to delete budgetItem');
+      console.error("Failed to delete budgetItem");
     }
-  }
-  
+  };
 
   return (
     isAuthenticated && (
@@ -85,24 +87,28 @@ export const CurrentBudgets = () => {
             <Table aria-label="Budget Table">
               <TableBody>
                 {budgets.map((budgetItem) => (
-                  <TableRow key={budgetItem._id} className={budgetItem.source === 'database' ? 'database-budget' : 'local-budget'}>
-                  <TableCell>
-                    {budgetItem.source === 'database' ? (
-                      <CheckCircle /> // Database icon
-                    ) : (
-                      <AddCircle /> // Plus icon for local budgets
-                    )}
+                  <TableRow
+                    key={budgetItem._id}
+                    className={
+                      budgetItem.source === "database"
+                        ? "database-budget"
+                        : "local-budget"
+                    }
+                  >
+                    <TableCell>
                     {budgetItem.category}
-                  </TableCell>
+                    </TableCell>
                     <TableCell>{budgetItem.budget}</TableCell>
                     <TableCell>
-                    <DeleteIcon
+                      <DeleteIcon
                         onClick={() => {
                           if (isDeleteEnabled) {
-                            handleDeleteBudget(budgetItem._id)
+                            handleDeleteBudget(budgetItem._id);
                           }
                         }}
-                        className={isDeleteEnabled ? "delete-enabled" : "delete-disabled"}
+                        className={
+                          isDeleteEnabled ? "delete-enabled" : "delete-disabled"
+                        }
                       />
                     </TableCell>
                   </TableRow>
@@ -111,11 +117,11 @@ export const CurrentBudgets = () => {
             </Table>
           </TableContainer>
           <div className="button-container">
-        <div className="left-content">
-          <NewBudgetItem />
-        </div>
-        </div>
-        <Button
+            <div className="left-content">
+              { isDeleteEnabled && <NewBudgetItem />}
+            </div>
+          </div>
+          <Button
             className="save-changes-button"
             variant="contained"
             color="primary"

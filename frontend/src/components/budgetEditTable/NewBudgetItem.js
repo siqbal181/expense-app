@@ -4,9 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Input from "@mui/material/Input";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
+import './NewBudgetItem.css'
 
 const NewBudgetItem = () => {
   const { budgets, dispatch } = useBudgetsContext();
@@ -54,6 +54,7 @@ const NewBudgetItem = () => {
         <Select
           value={newCategory}
           onChange={handleCategoryChange}
+          className="dropdown-box"
         >
           {availableCategories.length > 0 ? (
             availableCategories.map((category) => (
@@ -73,13 +74,12 @@ const NewBudgetItem = () => {
           type="number"
           value={newAmount}
           onChange={handleAmountChange}
+          className="number-input"
         />
       </TableCell>
       <TableCell>
-        <DeleteIcon
-          onClick={() => handleAddBudgetItem()}
-        />
         <DoneIcon
+        className="done-icon"
           onClick={() => handleAddBudgetItem()}
         />
       </TableCell>
