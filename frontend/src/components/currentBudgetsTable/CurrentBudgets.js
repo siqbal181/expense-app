@@ -20,6 +20,7 @@ export const CurrentBudgets = () => {
   const { budgets, dispatch } = useBudgetsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCurrentBudgets = async () => {
@@ -44,10 +45,44 @@ export const CurrentBudgets = () => {
     }
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     setDeleteEnabled(false);
     setSaveEnabled(false);
-  };
+  
+    // Filter out locally added budgets with source "local"
+    const newBudget = budgets.filter((budgetItem) => budgetItem.source === "local").map((budgetItem) => ({
+      category: budgetItem.category,
+      budget: budgetItem.budget
+    }));
+  
+    if (newBudget.length === 0) {
+      console.log("No locally added budgets to save.");
+      return;
+    }
+  
+    const response = await fetch("http://localhost:4000/budgets/save-budget", {
+      method: "POST",
+      body: JSON.stringify(newBudget),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  
+    try {
+      const textResponse = await response.text();
+      if (response.ok) {
+        const json = JSON.parse(textResponse);
+        setError(null);
+        dispatch({ type: "CREATE_BUDGET", payload: json });
+      } else {
+        console.error("Error saving budgets to the database:", textResponse);
+      }
+    } catch (error) {
+      console.error("An error occurred while handling the response:", error);
+    }
+  }
+  
+  
 
   const handleDeleteBudget = async (budgetItemId) => {
     const response = await fetch(
