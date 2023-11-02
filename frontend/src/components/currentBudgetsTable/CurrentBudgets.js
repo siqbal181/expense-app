@@ -156,15 +156,17 @@ export const CurrentBudgets = () => {
               {isDeleteEnabled && <NewBudgetItem />}
             </div>
           </div>
-          <Button
-            className="save-changes-button"
-            variant="contained"
-            color="primary"
-            disabled={!isSaveEnabled}
-            onClick={handleSaveChanges}
-          >
-            Save Changes
-          </Button>
+          {isDeleteEnabled && (
+            <Button
+              className="save-changes-button"
+              variant="contained"
+              color="primary"
+              disabled={!isSaveEnabled}
+              onClick={handleSaveChanges}
+            >
+              Save Changes
+            </Button>
+          )}
         </Paper>
       </div>
     )
