@@ -50,7 +50,6 @@ export const CurrentBudgets = () => {
     setDeleteEnabled(false);
     setSaveEnabled(false);
 
-    // Filter out locally added budgets with source "local"
     const newBudget = budgets
       .filter((budgetItem) => budgetItem.source === "local")
       .map((budgetItem) => ({
@@ -152,9 +151,7 @@ export const CurrentBudgets = () => {
             </Table>
           </TableContainer>
           <div className="button-container">
-            <div className="left-content">
               {isDeleteEnabled && <NewBudgetItem />}
-            </div>
           </div>
           {isDeleteEnabled && (
             <Button
@@ -163,6 +160,7 @@ export const CurrentBudgets = () => {
               color="primary"
               disabled={!isSaveEnabled}
               onClick={handleSaveChanges}
+              style={{marginTop: "10px"}}
             >
               Save Changes
             </Button>

@@ -9,37 +9,27 @@
   flex: 1; 
 }
 
-/* Edit and Delete Icons */
 .edit-enabled {
-  cursor: pointer; /* Change the cursor to a pointer when enabled */
+  cursor: pointer; 
 }
 
 .edit-disabled {
   cursor: pointer;
-  color: gray; /* Change the color when disabled */
+  color: gray; 
 }
 
 .delete-enabled {
-  cursor: pointer; /* Change the cursor to a pointer when enabled */
+  cursor: pointer; 
 }
 
 .delete-disabled {
-  cursor: not-allowed; /* Use the not-allowed cursor when disabled */
-  pointer-events: none; /* Disable pointer events when disabled */
-  opacity: 0.5; /* Apply some opacity to indicate it's disabled */
+  cursor: not-allowed; 
+  pointer-events: none; 
+  opacity: 0.5; 
   color: white;
 }
 
-/* CSS for the parent container */
-.button-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-/* In your CSS file */
 .local-budget {
-  background-color: #fffee0; /* Light yellow */
+  background-color: #fffee0; 
 }
 
