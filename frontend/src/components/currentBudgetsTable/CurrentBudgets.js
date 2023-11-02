@@ -20,6 +20,7 @@ export const CurrentBudgets = () => {
   const { budgets, dispatch } = useBudgetsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
+  const [changesSaved, setChangesSaved] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -48,18 +49,20 @@ export const CurrentBudgets = () => {
   const handleSaveChanges = async () => {
     setDeleteEnabled(false);
     setSaveEnabled(false);
-  
+
     // Filter out locally added budgets with source "local"
-    const newBudget = budgets.filter((budgetItem) => budgetItem.source === "local").map((budgetItem) => ({
-      category: budgetItem.category,
-      budget: budgetItem.budget
-    }));
-  
+    const newBudget = budgets
+      .filter((budgetItem) => budgetItem.source === "local")
+      .map((budgetItem) => ({
+        category: budgetItem.category,
+        budget: budgetItem.budget,
+      }));
+
     if (newBudget.length === 0) {
       console.log("No locally added budgets to save.");
       return;
     }
-  
+
     const response = await fetch("http://localhost:4000/budgets/save-budget", {
       method: "POST",
       body: JSON.stringify(newBudget),
@@ -67,10 +70,11 @@ export const CurrentBudgets = () => {
         "Content-Type": "application/json",
       },
     });
-  
+
     try {
       const textResponse = await response.text();
       if (response.ok) {
+        setChangesSaved(true);
         setError(null);
       } else {
         console.error("Error saving budgets to the database:", textResponse);
@@ -78,9 +82,7 @@ export const CurrentBudgets = () => {
     } catch (error) {
       console.error("An error occurred while handling the response:", error);
     }
-  }
-  
-  
+  };
 
   const handleDeleteBudget = async (budgetItemId) => {
     const response = await fetch(
@@ -125,12 +127,12 @@ export const CurrentBudgets = () => {
                     className={
                       budgetItem.source === "database"
                         ? "database-budget"
+                        : changesSaved
+                        ? "saved-budget"
                         : "local-budget"
                     }
                   >
-                    <TableCell>
-                    {budgetItem.category}
-                    </TableCell>
+                    <TableCell>{budgetItem.category}</TableCell>
                     <TableCell>{budgetItem.budget}</TableCell>
                     <TableCell>
                       <DeleteIcon
@@ -151,7 +153,7 @@ export const CurrentBudgets = () => {
           </TableContainer>
           <div className="button-container">
             <div className="left-content">
-              { isDeleteEnabled && <NewBudgetItem />}
+              {isDeleteEnabled && <NewBudgetItem />}
             </div>
           </div>
           <Button
