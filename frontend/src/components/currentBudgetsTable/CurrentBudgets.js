@@ -71,9 +71,7 @@ export const CurrentBudgets = () => {
     try {
       const textResponse = await response.text();
       if (response.ok) {
-        const json = JSON.parse(textResponse);
         setError(null);
-        dispatch({ type: "CREATE_BUDGET", payload: json });
       } else {
         console.error("Error saving budgets to the database:", textResponse);
       }
