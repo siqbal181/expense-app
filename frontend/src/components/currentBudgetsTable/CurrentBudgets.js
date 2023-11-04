@@ -117,17 +117,18 @@ export const CurrentBudgets = () => {
         body: JSON.stringify({ budget: newBudgetValue }),
       },
     );
-  
+
     if (response.ok) {
       console.log("BudgetItem updated successfully");
-      
-      dispatch({ type: "UPDATE_BUDGET", payload: { _id: budgetItemId, budget: newBudgetValue } });
-  
+
+      dispatch({
+        type: "UPDATE_BUDGET",
+        payload: { _id: budgetItemId, budget: newBudgetValue },
+      });
     } else {
       console.error("Failed to update budgetItem");
     }
   };
-  
 
   return (
     isAuthenticated && (
@@ -164,7 +165,6 @@ export const CurrentBudgets = () => {
                             type="number"
                             value={budgetItem.budget}
                             onChange={(e) => {
-                              // Update the budget value in the state as the user edits it
                               const updatedBudgets = budgets.map((item) =>
                                 item._id === budgetItem._id
                                   ? {
@@ -181,7 +181,6 @@ export const CurrentBudgets = () => {
                           />
                           <Done
                             onClick={() => {
-                              // Handle the update when the "Done" icon is clicked
                               handleUpdateBudget(
                                 budgetItem._id,
                                 budgetItem.budget,
