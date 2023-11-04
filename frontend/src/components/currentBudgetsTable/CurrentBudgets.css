@@ -35,5 +35,10 @@
 
 .editable-budget {
   border: 1px solid #007BFF; /* Add a blue border */
-  background-color: #E5F4FF; 
+  background-color: #E5F4FF;
+  display: inline-block; /* Set it to inline-block */
+  width: 60px; /* Set a fixed width */
+  text-align: center; /* Center the text horizontally */
+  padding: 4px; /* Add some padding for spacing */
+  border-radius: 4px;
 }
