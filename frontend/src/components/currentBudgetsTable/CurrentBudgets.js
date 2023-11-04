@@ -13,6 +13,7 @@ import { useBudgetsContext } from "../../hooks/useBudgetsContext";
 import NewBudgetItem from "../budgetEditTable/NewBudgetItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Done from "@mui/icons-material/Done";
 import "./CurrentBudgets.css";
 
 export const CurrentBudgets = () => {
@@ -21,6 +22,7 @@ export const CurrentBudgets = () => {
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
+  const [editedBudget, setEditedBudget] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -104,6 +106,25 @@ export const CurrentBudgets = () => {
     }
   };
 
+  const handleUpdateBudget = async (budgetItemId, newBudgetValue) => {
+    const response = await fetch(
+      `http://localhost:4000/budgets/update-budget/${budgetItemId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ budget: newBudgetValue }),
+      },
+    );
+
+    if (response.ok) {
+      console.log("BudgetItem updated successfully");
+    } else {
+      console.error("Failed to update budgetItem");
+    }
+  };
+
   return (
     isAuthenticated && (
       <div>
@@ -132,7 +153,46 @@ export const CurrentBudgets = () => {
                     }
                   >
                     <TableCell>{budgetItem.category}</TableCell>
-                    <TableCell>{budgetItem.budget}</TableCell>
+                    <TableCell>
+                      {editedBudget === budgetItem._id ? (
+                        <>
+                          <input
+                            type="number"
+                            value={budgetItem.budget}
+                            onChange={(e) => {
+                              // Update the budget value in the state as the user edits it
+                              const updatedBudgets = budgets.map((item) =>
+                                item._id === budgetItem._id
+                                  ? {
+                                      ...item,
+                                      budget: parseFloat(e.target.value),
+                                    }
+                                  : item,
+                              );
+                              dispatch({
+                                type: "SET_BUDGETS",
+                                payload: updatedBudgets,
+                              });
+                            }}
+                          />
+                          <Done
+                            onClick={() => {
+                              // Handle the update when the "Done" icon is clicked
+                              handleUpdateBudget(
+                                budgetItem._id,
+                                budgetItem.budget,
+                              );
+                              setEditedBudget(null);
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <span onClick={() => setEditedBudget(budgetItem._id)}>
+                          {budgetItem.budget}
+                        </span>
+                      )}
+                    </TableCell>
+
                     <TableCell>
                       <DeleteIcon
                         onClick={() => {
@@ -151,7 +211,7 @@ export const CurrentBudgets = () => {
             </Table>
           </TableContainer>
           <div className="button-container">
-              {isDeleteEnabled && <NewBudgetItem />}
+            {isDeleteEnabled && <NewBudgetItem />}
           </div>
           {isDeleteEnabled && (
             <Button
@@ -160,7 +220,7 @@ export const CurrentBudgets = () => {
               color="primary"
               disabled={!isSaveEnabled}
               onClick={handleSaveChanges}
-              style={{marginTop: "10px"}}
+              style={{ marginTop: "10px" }}
             >
               Save Changes
             </Button>
