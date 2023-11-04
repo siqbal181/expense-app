@@ -160,7 +160,7 @@ export const CurrentBudgets = () => {
                     <TableCell>{budgetItem.category}</TableCell>
                     <TableCell>
                       {editedBudget === budgetItem._id ? (
-                        <>
+                        <div>
                           <input
                             type="number"
                             value={budgetItem.budget}
@@ -188,9 +188,12 @@ export const CurrentBudgets = () => {
                               setEditedBudget(null);
                             }}
                           />
-                        </>
+                        </div>
                       ) : (
-                        <span onClick={() => setEditedBudget(budgetItem._id)}>
+                        <span
+                          onClick={() => setEditedBudget(budgetItem._id)}
+                          className={isDeleteEnabled ? "editable-budget" : ""}
+                        >
                           {budgetItem.budget}
                         </span>
                       )}
