@@ -1,0 +1,35 @@
+/* The Top row title and edit icon */
+.top-row {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+}
+
+.title-container {
+  flex: 1; 
+}
+
+.edit-enabled {
+  cursor: pointer; 
+}
+
+.edit-disabled {
+  cursor: pointer;
+  color: gray; 
+}
+
+.delete-enabled {
+  cursor: pointer; 
+}
+
+.delete-disabled {
+  cursor: not-allowed; 
+  pointer-events: none; 
+  opacity: 0.5; 
+  color: white;
+}
+
+.local-budget {
+  background-color: #fffee0; 
+}
+
