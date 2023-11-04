@@ -117,13 +117,17 @@ export const CurrentBudgets = () => {
         body: JSON.stringify({ budget: newBudgetValue }),
       },
     );
-
+  
     if (response.ok) {
       console.log("BudgetItem updated successfully");
+      
+      dispatch({ type: "UPDATE_BUDGET", payload: { _id: budgetItemId, budget: newBudgetValue } });
+  
     } else {
       console.error("Failed to update budgetItem");
     }
   };
+  
 
   return (
     isAuthenticated && (
