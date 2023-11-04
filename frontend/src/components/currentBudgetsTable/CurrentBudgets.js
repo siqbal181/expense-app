@@ -162,6 +162,7 @@ export const CurrentBudgets = () => {
                       {editedBudget === budgetItem._id ? (
                         <div>
                           <input
+                            className="budget-input"
                             type="number"
                             value={budgetItem.budget}
                             onChange={(e) => {
