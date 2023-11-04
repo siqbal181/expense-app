@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { saveBudget, getBudget, deleteBudget } = require("../controllers/monthlyBudgetController");
+const { saveBudget, getBudget, deleteBudget, updateBudget } = require("../controllers/monthlyBudgetController");
 
 // Get the monthly budget
 router.get('/', getBudget);
@@ -11,7 +11,7 @@ router.post('/save-budget', saveBudget)
 // Delete a budget
 router.delete('/delete-budget/:id', deleteBudget)
 
-// Update the monthly budget
-// router.patch('/update-budget/:id', // pending )
+// Edit a monthly budget item
+router.patch('/update-budget/:id', updateBudget);
 
 module.exports = router;

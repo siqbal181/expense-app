@@ -42,7 +42,25 @@ const deleteBudget = async (req, res) => {
   }
 };
 
-
 // update a single element from the budget
+const updateBudget = async (req, res) => {
+  const id = req.params.id; 
+  const updatedBudget = req.body; 
 
-module.exports = {saveBudget, getBudget, deleteBudget};
+  try {
+    const updatedBudgetItem = await MonthlyBudget.findByIdAndUpdate(id, updatedBudget, {
+      new: true,
+      runValidators: true
+,    });
+
+    if (!updatedBudgetItem) {
+      return res.status(404).json({ error: 'Budget not found' });
+    }
+
+    res.status(200).json({ message: 'Budget updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = {saveBudget, getBudget, deleteBudget, updateBudget};
