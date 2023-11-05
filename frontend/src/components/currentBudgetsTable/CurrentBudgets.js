@@ -162,7 +162,9 @@ export const CurrentBudgets = () => {
                       {editedBudget === budgetItem._id ? (
                         <div>
                           <input
-                            className="budget-input"
+                            className={`budget-input ${
+                              isDeleteEnabled ? "editable-budget" : ""
+                            }`}
                             type="number"
                             value={budgetItem.budget}
                             onChange={(e) => {
@@ -180,15 +182,17 @@ export const CurrentBudgets = () => {
                               });
                             }}
                           />
-                          <Done
-                            onClick={() => {
-                              handleUpdateBudget(
-                                budgetItem._id,
-                                budgetItem.budget,
-                              );
-                              setEditedBudget(null);
-                            }}
-                          />
+                          {isDeleteEnabled && (
+                            <Done
+                              onClick={() => {
+                                handleUpdateBudget(
+                                  budgetItem._id,
+                                  budgetItem.budget,
+                                );
+                                setEditedBudget(null);
+                              }}
+                            />
+                          )}
                         </div>
                       ) : (
                         <span
