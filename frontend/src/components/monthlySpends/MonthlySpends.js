@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useBudgetsContext } from "../../hooks/useBudgetsContext";
-import NewBudgetItem from "../budgetEditTable/NewBudgetItem";
+import NewSpendItem from "./NewSpendItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -23,7 +23,7 @@ export const MonthlySpends = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCurrentBudgets = async () => {
+    const fetchCurrentSpends = async () => {
       const response = await fetch("http://localhost:4000/budgets/");
       const json = await response.json();
 
@@ -32,7 +32,7 @@ export const MonthlySpends = () => {
       }
     };
 
-    fetchCurrentBudgets();
+    fetchCurrentSpends();
   }, [dispatch]);
 
   const toggleEditActions = () => {
@@ -150,7 +150,7 @@ export const MonthlySpends = () => {
             </Table>
           </TableContainer>
           <div className="button-container">
-              {isDeleteEnabled && <NewBudgetItem />}
+              {isDeleteEnabled && <NewSpendItem />}
           </div>
           {isDeleteEnabled && (
             <Button

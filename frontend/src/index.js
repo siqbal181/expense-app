@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { Auth0Provider } from '@auth0/auth0-react';
-import { BudgetsContextProvider } from './context/BudgetsContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { BudgetsContextProvider } from "./context/BudgetsContext";
+import { SpendsContextProvider } from "./context/SpendsContext";
 
-const authConfig = require('./auth_config.json')
+const authConfig = require("./auth_config.json");
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <Auth0Provider
@@ -19,11 +20,12 @@ root.render(
       // scope: "read:current_user update:current_user_metadata"
     }}
   >
-  <React.StrictMode>
-    <BudgetsContextProvider>
-    <App />
-    </BudgetsContextProvider>
-  </React.StrictMode>
-  </Auth0Provider>
+    <React.StrictMode>
+      <BudgetsContextProvider>
+        <SpendsContextProvider>
+          <App />
+        </SpendsContextProvider>
+      </BudgetsContextProvider>
+    </React.StrictMode>
+  </Auth0Provider>,
 );
-
