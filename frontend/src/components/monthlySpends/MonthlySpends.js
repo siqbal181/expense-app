@@ -9,14 +9,14 @@ import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import { TableBody } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useBudgetsContext } from "../../hooks/useBudgetsContext";
+import { useSpendsContext } from "../../hooks/useSpendsContext";
 import NewSpendItem from "./NewSpendItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export const MonthlySpends = () => {
   const { isAuthenticated } = useAuth0();
-  const { budgets, dispatch } = useBudgetsContext();
+  const { spends, dispatch } = useSpendsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
@@ -24,11 +24,11 @@ export const MonthlySpends = () => {
 
   useEffect(() => {
     const fetchCurrentSpends = async () => {
-      const response = await fetch("http://localhost:4000/budgets/");
+      const response = await fetch("http://localhost:4000/spends");
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_BUDGETS", payload: json });
+        dispatch({ type: "SET_SPENDS", payload: json });
       }
     };
 
@@ -49,15 +49,15 @@ export const MonthlySpends = () => {
     setDeleteEnabled(false);
     setSaveEnabled(false);
 
-    const newBudget = budgets
-      .filter((budgetItem) => budgetItem.source === "local")
-      .map((budgetItem) => ({
-        category: budgetItem.category,
-        budget: budgetItem.budget,
+    const newSpend = spends
+      .filter((spendItem) => spendItem.source === "local")
+      .map((spendItem) => ({
+        category: spendItem.category,
+        budget: spendItem.budget,
       }));
 
-    if (newBudget.length === 0) {
-      console.log("No locally added budgets to save.");
+    if (newSpend.length === 0) {
+      console.log("No locally added spend to save.");
       return;
     }
 

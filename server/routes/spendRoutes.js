@@ -1,21 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const MonthlySpend = require('../models/monthlySpendModel')
+const { getSpend, saveSpend, deleteSpend, updateSpend } = require('../controllers/monthlySpendController')
 
-router.get('/', (req, res) => {
-  const monthlySpend = new MonthlySpend({
-    category: 'Bills',
-    budget: 150,
-    month: 'January'
-  })
+router.get('/', getSpend);
 
-  monthlySpend.save()
-    .then((result) => {
-      res.send(result)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-})
+router.post('/save-spend', saveSpend);
+
+router.delete('/delete-spend/:id', deleteSpend);
+
+router.patch('/update-spend/:id', updateSpend);
 
 module.exports = router;
