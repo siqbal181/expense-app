@@ -54,6 +54,7 @@ export const MonthlySpends = () => {
       .map((spendItem) => ({
         category: spendItem.category,
         budget: spendItem.budget,
+        month: spendItem.month,
       }));
 
     if (newSpend.length === 0) {
@@ -61,9 +62,9 @@ export const MonthlySpends = () => {
       return;
     }
 
-    const response = await fetch("http://localhost:4000/budgets/save-budget", {
+    const response = await fetch("http://localhost:4000/spends/save-spend", {
       method: "POST",
-      body: JSON.stringify(newBudget),
+      body: JSON.stringify(newSpend),
       headers: {
         "Content-Type": "application/json",
       },
@@ -75,31 +76,31 @@ export const MonthlySpends = () => {
         setChangesSaved(true);
         setError(null);
       } else {
-        console.error("Error saving budgets to the database:", textResponse);
+        console.error("Error saving spends to the database:", textResponse);
       }
     } catch (error) {
       console.error("An error occurred while handling the response:", error);
     }
   };
 
-  const handleDeleteBudget = async (budgetItemId) => {
+  const handleDeleteSpend = async (spendItemId) => {
     const response = await fetch(
-      `http://localhost:4000/budgets/delete-budget/${budgetItemId}`,
+      `http://localhost:4000/spends/delete-spend/${spendItemId}`,
       {
         method: "DELETE",
       },
     );
 
     if (response.ok) {
-      console.log("BudgetItem deleted successfully");
+      console.log("SpendItem deleted successfully");
 
-      const updatedBudgets = budgets.filter(
-        (budgetItem) => budgetItem._id !== budgetItemId,
+      const updatedSpends = spends.filter(
+        (spendItem) => spendItem._id !== spendItemId,
       );
 
-      dispatch({ type: "SET_BUDGETS", payload: updatedBudgets });
+      dispatch({ type: "SET_SPENDS", payload: updatedSpends });
     } else {
-      console.error("Failed to delete budgetItem");
+      console.error("Failed to delete spendItem");
     }
   };
 
@@ -117,26 +118,26 @@ export const MonthlySpends = () => {
             />
           </div>
           <TableContainer>
-            <Table aria-label="Budget Table">
+            <Table aria-label="Spend Table">
               <TableBody>
-                {budgets.map((budgetItem) => (
+                {spends.map((spendItem) => (
                   <TableRow
-                    key={budgetItem._id}
+                    key={spendItem._id}
                     className={
-                      budgetItem.source === "database"
-                        ? "database-budget"
+                      spendItem.source === "database"
+                        ? "database-spend"
                         : changesSaved
-                        ? "saved-budget"
-                        : "local-budget"
+                        ? "saved-spend"
+                        : "local-spend"
                     }
                   >
-                    <TableCell>{budgetItem.category}</TableCell>
-                    <TableCell>{budgetItem.budget}</TableCell>
+                    <TableCell>{spendItem.category}</TableCell>
+                    <TableCell>{spendItem.budget}</TableCell>
                     <TableCell>
                       <DeleteIcon
                         onClick={() => {
                           if (isDeleteEnabled) {
-                            handleDeleteBudget(budgetItem._id);
+                            handleDeleteSpend(spendItem._id);
                           }
                         }}
                         className={
