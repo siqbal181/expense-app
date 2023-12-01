@@ -11,6 +11,7 @@ const saveSpend = async (req, res) => {
 
   try {
     const result = await Promise.all(
+
       spendData.map(async (spendItem) => {
         const { category, budget, month } = spendItem;
         const monthlySpend = new MonthlySpend({ category, budget, month});

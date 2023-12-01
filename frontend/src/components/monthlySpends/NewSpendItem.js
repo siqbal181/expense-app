@@ -5,10 +5,10 @@ import Input from "@mui/material/Input";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import DoneIcon from '@mui/icons-material/Done';
-import { useBudgetsContext } from "../../hooks/useBudgetsContext";
+import { useSpendsContext } from "../../hooks/useSpendsContext";
 
 const NewSpendItem = () => {
-  const { budgets, dispatch } = useBudgetsContext();
+  const { spends, dispatch } = useSpendsContext();
   const [newCategory, setNewCategory] = useState("");
   const [newAmount, setNewAmount] = useState("");
 
@@ -22,7 +22,7 @@ const NewSpendItem = () => {
   ];
 
   const availableCategories = allCategories.filter(category => 
-    !budgets.some(budgetItem => budgetItem.category === category)
+    !spends.some(spendItem => spendItem.category === category)
   );
 
   const handleCategoryChange = (event) => {
@@ -33,15 +33,15 @@ const NewSpendItem = () => {
     setNewAmount(event.target.value);
   };
 
-  const handleAddBudgetItem = () => {
+  const handleAddSpendItem = () => {
     if (newCategory && newAmount) {
-      const newBudgetItem = {
+      const newSpendItem = {
         category: newCategory,
         budget: parseFloat(newAmount),
         source: 'local'
       };
 
-      dispatch({ type: 'CREATE_BUDGET', payload: newBudgetItem });
+      dispatch({ type: 'CREATE_SPEND', payload: newSpendItem });
       setNewCategory("");
       setNewAmount("");
     }
@@ -79,7 +79,7 @@ const NewSpendItem = () => {
       <TableCell>
         <DoneIcon
         className="done-icon"
-          onClick={() => handleAddBudgetItem()}
+          onClick={() => handleAddSpendItem()}
         />
       </TableCell>
     </TableRow>

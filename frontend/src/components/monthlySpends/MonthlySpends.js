@@ -54,7 +54,7 @@ export const MonthlySpends = () => {
       .map((spendItem) => ({
         category: spendItem.category,
         budget: spendItem.budget,
-        month: spendItem.month,
+        month: spendItem.month || "January"
       }));
 
     if (newSpend.length === 0) {
