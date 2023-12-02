@@ -28,6 +28,7 @@ export const MonthlySpends = () => {
 
   const handleDateChange = (date) => {
     setSelectedMonthYear(date)
+    console.log(selectedMonthYear)
   }
 
   const fetchCurrentSpends = useCallback(async () => {
