@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
 import { MonthConverter } from "../../utils/MonthConverter";
+import { parse } from "url";
 
 export const MonthlySpends = () => {
   const { isAuthenticated } = useAuth0();
@@ -26,9 +27,19 @@ export const MonthlySpends = () => {
   // eslint-disable-next-line
   const [error, setError] = useState(null);
 
+  const filterSpendDataByYear = (date) => {
+    setSelectedMonthYear(date);
+
+    const year = selectedMonthYear.year();
+    const month = selectedMonthYear.month();
+
+    const convertedMonth = MonthConverter(month);
+    console.log(convertedMonth, year)
+  }
+
   useEffect(() => {
     const fetchCurrentSpends = async () => {
-      const response = await fetch("http://localhost:4000/spends");
+      const response = await fetch(`http://localhost:4000/spends?month=${convertedMonth}&year=${year}`);
       const json = await response.json();
 
       if (response.ok) {
@@ -108,18 +119,7 @@ export const MonthlySpends = () => {
     }
   };
 
-  const filterSpendDataByYear = (date) => {
-    setSelectedMonthYear(date);
-    console.log(selectedMonthYear)
 
-    const year = selectedMonthYear.year();
-    const month = selectedMonthYear.month();
-    console.log(year, month);
-
-    const convertedMonth = MonthConverter(month);
-    console.log(convertedMonth)
-
-  }
 
   return (
     isAuthenticated && (

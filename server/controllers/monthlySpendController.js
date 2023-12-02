@@ -1,9 +1,21 @@
 const MonthlySpend = require('../models/monthlySpendModel');
 
 const getSpend = async (req, res) => {
-  const monthlySpend = await MonthlySpend.find({})
+  try {
+    const { query } = parse(req.url, true);
 
-  res.status(200).json(monthlySpend);
+    const {
+      month = new Date().toLocaleString('default', { month: 'long' }),
+      year = new Date().getFullYear()
+    } = query;
+
+    const monthlySpend = await MonthlySpend.find({ month, year });
+
+    res.status(200).json(monthlySpend);
+  } catch (error) {
+    console.log("Error fetching spends:", error);
+    res.status(500).json({ error: "Internal server error" })
+  }
 }
 
 const saveSpend = async (req, res) => {
