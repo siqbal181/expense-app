@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -15,7 +15,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
 import { MonthConverter } from "../../utils/MonthConverter";
-import { parse } from "url";
 
 export const MonthlySpends = () => {
   const { isAuthenticated } = useAuth0();
@@ -27,28 +26,36 @@ export const MonthlySpends = () => {
   // eslint-disable-next-line
   const [error, setError] = useState(null);
 
-  const filterSpendDataByYear = (date) => {
-    setSelectedMonthYear(date);
-
-    const year = selectedMonthYear.year();
-    const month = selectedMonthYear.month();
-
-    const convertedMonth = MonthConverter(month);
-    console.log(convertedMonth, year)
+  const handleDateChange = (date) => {
+    setSelectedMonthYear(date)
   }
 
-  useEffect(() => {
-    const fetchCurrentSpends = async () => {
-      const response = await fetch(`http://localhost:4000/spends?month=${convertedMonth}&year=${year}`);
-      const json = await response.json();
+  const fetchCurrentSpends = useCallback(async () => {
+    try {
+      if (selectedMonthYear) {
+        const year = selectedMonthYear.year();
+        const month = selectedMonthYear.month();
+        const convertedMonth = MonthConverter(month);
 
-      if (response.ok) {
-        dispatch({ type: "SET_SPENDS", payload: json });
+        const response = await fetch(
+          `http://localhost:4000/spends?month=${convertedMonth}&year=${year}`
+        );
+
+        if (response.ok) {
+          const json = await response.json();
+          dispatch({ type: "SET_SPENDS", payload: json });
+        } else {
+          console.error("Failed to fetch spends:", response.statusText);
+        }
       }
-    };
+    } catch (error) {
+      console.error("Error fetching spends:", error);
+    }
+  }, [selectedMonthYear, dispatch]);
 
+  useEffect(() => {
     fetchCurrentSpends();
-  }, [dispatch]);
+  }, [fetchCurrentSpends]);
 
   const toggleEditActions = () => {
     if (isDeleteEnabled && isSaveEnabled) {
@@ -124,7 +131,7 @@ export const MonthlySpends = () => {
   return (
     isAuthenticated && (
       <div>
-        <DatePickerComponent onDateChange={filterSpendDataByYear}/>
+        <DatePickerComponent onDateChange={handleDateChange}/>
         <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
