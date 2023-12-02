@@ -13,6 +13,7 @@ import { useSpendsContext } from "../../hooks/useSpendsContext";
 import NewSpendItem from "./NewSpendItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
 
 export const MonthlySpends = () => {
   const { isAuthenticated } = useAuth0();
@@ -107,6 +108,7 @@ export const MonthlySpends = () => {
   return (
     isAuthenticated && (
       <div>
+        <DatePickerComponent/>
         <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
