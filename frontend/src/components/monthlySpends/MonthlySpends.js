@@ -14,6 +14,7 @@ import NewSpendItem from "./NewSpendItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
+import { MonthConverter } from "../../utils/MonthConverter";
 
 export const MonthlySpends = () => {
   const { isAuthenticated } = useAuth0();
@@ -107,19 +108,23 @@ export const MonthlySpends = () => {
     }
   };
 
-  const handleDateChange = (date) => {
-    setSelectedMonthYear(date);
-    console.log(selectedMonthYear);
-  }
-
   const filterSpendDataByYear = (date) => {
-    
+    setSelectedMonthYear(date);
+    console.log(selectedMonthYear)
+
+    const year = selectedMonthYear.year();
+    const month = selectedMonthYear.month();
+    console.log(year, month);
+
+    const convertedMonth = MonthConverter(month);
+    console.log(convertedMonth)
+
   }
 
   return (
     isAuthenticated && (
       <div>
-        <DatePickerComponent onDateChange={handleDateChange}/>
+        <DatePickerComponent onDateChange={filterSpendDataByYear}/>
         <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
