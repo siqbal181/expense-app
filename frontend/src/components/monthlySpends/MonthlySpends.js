@@ -21,6 +21,8 @@ export const MonthlySpends = () => {
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
+  const [selectedMonthYear, setSelectedMonthYear] = useState(null);
+  // eslint-disable-next-line
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -105,10 +107,19 @@ export const MonthlySpends = () => {
     }
   };
 
+  const handleDateChange = (date) => {
+    setSelectedMonthYear(date);
+    console.log(selectedMonthYear);
+  }
+
+  const filterSpendDataByYear = (date) => {
+    
+  }
+
   return (
     isAuthenticated && (
       <div>
-        <DatePickerComponent/>
+        <DatePickerComponent onDateChange={handleDateChange}/>
         <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
