@@ -27,9 +27,9 @@ export const MonthlySpends = () => {
   const [error, setError] = useState(null);
 
   const handleDateChange = (date) => {
-    setSelectedMonthYear(date)
-    console.log(selectedMonthYear)
-  }
+    setSelectedMonthYear(date);
+    console.log(selectedMonthYear);
+  };
 
   const fetchCurrentSpends = useCallback(async () => {
     try {
@@ -39,7 +39,7 @@ export const MonthlySpends = () => {
         const convertedMonth = MonthConverter(month);
 
         const response = await fetch(
-          `http://localhost:4000/spends?month=${convertedMonth}&year=${year}`
+          `http://localhost:4000/spends?month=${convertedMonth}&year=${year}`,
         );
 
         if (response.ok) {
@@ -77,7 +77,7 @@ export const MonthlySpends = () => {
       .map((spendItem) => ({
         category: spendItem.category,
         budget: spendItem.budget,
-        month: spendItem.month || "January"
+        month: spendItem.month || "January",
       }));
 
     if (newSpend.length === 0) {
@@ -127,12 +127,10 @@ export const MonthlySpends = () => {
     }
   };
 
-
-
   return (
     isAuthenticated && (
       <div>
-        <DatePickerComponent onDateChange={handleDateChange}/>
+        <DatePickerComponent onDateChange={handleDateChange} />
         <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
@@ -177,7 +175,7 @@ export const MonthlySpends = () => {
             </Table>
           </TableContainer>
           <div className="button-container">
-              {isDeleteEnabled && <NewSpendItem />}
+            {isDeleteEnabled && <NewSpendItem />}
           </div>
           {isDeleteEnabled && (
             <Button
@@ -186,7 +184,7 @@ export const MonthlySpends = () => {
               color="primary"
               disabled={!isSaveEnabled}
               onClick={handleSaveChanges}
-              style={{marginTop: "10px"}}
+              style={{ marginTop: "10px" }}
             >
               Save Changes
             </Button>
