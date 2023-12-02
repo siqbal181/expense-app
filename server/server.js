@@ -31,6 +31,12 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use((req, res, next) => {
+  console.log('Incoming Request:', req.method, req.url);
+  console.log('Request Body:', req.body);
+  next();
+});
+
 //routes
 app.get('/', (req, res) => {
   res.send('Root of application')

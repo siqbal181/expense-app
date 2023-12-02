@@ -13,8 +13,8 @@ const saveSpend = async (req, res) => {
     const result = await Promise.all(
 
       spendData.map(async (spendItem) => {
-        const { category, budget, month } = spendItem;
-        const monthlySpend = new MonthlySpend({ category, budget, month});
+        const { category, budget, month, year } = spendItem;
+        const monthlySpend = new MonthlySpend({ category, budget, month, year});
         return await monthlySpend.save();
       })
     );

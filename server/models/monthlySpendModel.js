@@ -16,7 +16,7 @@ const spendSchema = new Schema({
   },
   year: {
     type: Number,
-    required: [true, 'Please provide the year.']
+    required: true
   }
 }, { timestamps: true });
 
