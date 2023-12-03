@@ -17,23 +17,6 @@ import CelebrationIcon from '@mui/icons-material/Celebration';
 import PaymentIcon from '@mui/icons-material/Payment';
 
 export const SpendVsBudgetTable = ({ selectedMonthSpend, monthlyBudget }) => {
-  const { budgets, spends, budgetsDispatch, spendsDispatch } = useCombinedContext();
-
-  useEffect(() => {
-    const fetchCurrentBudgets = async () => {
-      const response = await fetch("http://localhost:4000/budgets/");
-      const json = await response.json();
-
-      if (response.ok) {
-        // budgetsDispatch({ type: "SET_BUDGETS", payload: json });
-        // spendsDispatch({ type: "SET_SPENDS", payload: json });
-        console.log(json)
-      }
-    };
-
-    fetchCurrentBudgets();
-
-  }, [budgets, spends, budgetsDispatch, spendsDispatch]);
 
   const calculateBudgetVsSpend = (selectedMonthSpend, monthlyBudget, spends) => {
     // map over each of the categories
