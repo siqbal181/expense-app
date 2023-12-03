@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
 import { MonthConverter } from "../../utils/MonthConverter";
+import { SpendVsBudgetTable } from "../spendVsBudgetTable/spendVsBudgetTable";
 
 export const MonthlySpends = () => {
   const { isAuthenticated } = useAuth0();
@@ -23,6 +24,7 @@ export const MonthlySpends = () => {
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
   const [selectedMonthYear, setSelectedMonthYear] = useState(null);
+  const [isSpendForDateRangeSelected, setSpendForDateRangeSelected] = useState([])
   // eslint-disable-next-line
   const [error, setError] = useState(null);
 
@@ -190,6 +192,7 @@ export const MonthlySpends = () => {
             </Button>
           )}
         </Paper>
+        <SpendVsBudgetTable/>
       </div>
     )
   );
