@@ -17,7 +17,7 @@ import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
 import { MonthConverter } from "../../utils/MonthConverter";
 import { SpendVsBudgetTable } from "../spendVsBudgetTable/spendVsBudgetTable";
 
-export const MonthlySpends = () => {
+export const MonthlySpends = ({ spendProp }) => {
   const { isAuthenticated } = useAuth0();
   const { spends, dispatch } = useSpendsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
@@ -192,7 +192,6 @@ export const MonthlySpends = () => {
             </Button>
           )}
         </Paper>
-        <SpendVsBudgetTable/>
       </div>
     )
   );

@@ -1,0 +1,4 @@
+.table-layout {
+  display: flex;
+  justify-content: space-evenly;
+}

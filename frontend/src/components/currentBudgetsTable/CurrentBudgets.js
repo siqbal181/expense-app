@@ -16,7 +16,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Done from "@mui/icons-material/Done";
 import "./CurrentBudgets.css";
 
-export const CurrentBudgets = () => {
+export const CurrentBudgets = ({ budgetProp }) => {
   const { isAuthenticated } = useAuth0();
   const { budgets, dispatch } = useBudgetsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
