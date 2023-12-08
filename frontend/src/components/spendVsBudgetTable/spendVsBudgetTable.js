@@ -45,21 +45,40 @@ export const SpendVsBudgetTable = ({ selectedMonthSpend, monthlyBudget }) => {
     fetchMonthlySpends();
   }, [spendsDispatch]);
 
-  const calculateBudgetVsSpend = (
-    selectedMonthSpend,
-    monthlyBudget,
-    spends,
-  ) => {
-    // map over each of the categories
-    // if they exist within monthly budget
-    // take it away from the budget
-    // if it does not exist then still take it away but mark as uncategorised budget item
+  const calculateBudgetVsSpend = () => {
+    const mappedSpends = spends.map((spendItem) => ({
+      category: spendItem.category,
+      budget: spendItem.budget,
+    }));
+  
+    const mappedBudgets = budgets.map((budgetItem) => ({
+      category: budgetItem.category,
+      budget: budgetItem.budget,
+    }));
+  
+    const budgetVsSpend = mappedBudgets.map((budgetItem) => {
+      const matchingSpend = mappedSpends.find(
+        (spendItem) => spendItem.category === budgetItem.category
+      );
+  
+      const difference = matchingSpend
+        ? budgetItem.budget - matchingSpend.budget
+        : budgetItem.budget;
+  
+      return {
+        category: budgetItem.category,
+        difference,
+      };
+    });
+  
+    return budgetVsSpend;
   };
-
+  
   return (
     <>
       <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
         <Typography variant="h6">Spend Vs Budget</Typography>
+        <calculateBudgetVsSpend/>
       </Paper>
     </>
   );
