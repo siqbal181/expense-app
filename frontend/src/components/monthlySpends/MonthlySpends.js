@@ -15,16 +15,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
 import { MonthConverter } from "../../utils/MonthConverter";
-import { SpendVsBudgetTable } from "../spendVsBudgetTable/spendVsBudgetTable";
 
-export const MonthlySpends = ({ spendProp }) => {
+export const MonthlySpends = ({ setSpends }) => {
   const { isAuthenticated } = useAuth0();
   const { spends, dispatch } = useSpendsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
   const [selectedMonthYear, setSelectedMonthYear] = useState(null);
-  const [isSpendForDateRangeSelected, setSpendForDateRangeSelected] = useState([])
   // eslint-disable-next-line
   const [error, setError] = useState(null);
 
@@ -54,7 +52,7 @@ export const MonthlySpends = ({ spendProp }) => {
     } catch (error) {
       console.error("Error fetching spends:", error);
     }
-  }, [selectedMonthYear, dispatch]);
+  }, [selectedMonthYear, dispatch, setSpends]);
 
   useEffect(() => {
     fetchCurrentSpends();

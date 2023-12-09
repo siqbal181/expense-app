@@ -16,13 +16,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Done from "@mui/icons-material/Done";
 import "./CurrentBudgets.css";
 
-export const CurrentBudgets = ({ budgetProp }) => {
+export const CurrentBudgets = ({ setBudgets }) => {
   const { isAuthenticated } = useAuth0();
   const { budgets, dispatch } = useBudgetsContext();
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
   const [editedBudget, setEditedBudget] = useState(null);
+  // eslint-disable-next-line
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export const CurrentBudgets = ({ budgetProp }) => {
     };
 
     fetchCurrentBudgets();
-  }, [dispatch]);
+  }, [dispatch, setBudgets]);
 
   const toggleEditActions = () => {
     if (isDeleteEnabled && isSaveEnabled) {
