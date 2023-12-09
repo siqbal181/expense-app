@@ -13,8 +13,8 @@ import { useSpendsContext } from "../../hooks/useSpendsContext";
 import NewSpendItem from "./NewSpendItem";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DatePickerComponent from "../datePickerComponent/DatePickerComponent";
-import { MonthConverter } from "../../utils/MonthConverter";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const MonthlySpends = ({ setSpends }) => {
   const { isAuthenticated } = useAuth0();
@@ -22,24 +22,19 @@ export const MonthlySpends = ({ setSpends }) => {
   const [isDeleteEnabled, setDeleteEnabled] = useState(false);
   const [isSaveEnabled, setSaveEnabled] = useState(false);
   const [changesSaved, setChangesSaved] = useState(false);
-  const [selectedMonthYear, setSelectedMonthYear] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   // eslint-disable-next-line
   const [error, setError] = useState(null);
 
-  const handleDateChange = (date) => {
-    setSelectedMonthYear(date);
-    console.log(selectedMonthYear);
-  };
-
   const fetchCurrentSpends = useCallback(async () => {
     try {
-      if (selectedMonthYear) {
-        const year = selectedMonthYear.year();
-        const month = selectedMonthYear.month();
-        const convertedMonth = MonthConverter(month);
+      if (selectedDate) {
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.toLocaleString('en-UK', { month: 'long'});
+        console.log(month, year)
 
         const response = await fetch(
-          `http://localhost:4000/spends?month=${convertedMonth}&year=${year}`,
+          `http://localhost:4000/spends?month=${month}&year=${year}`,
         );
 
         if (response.ok) {
@@ -52,7 +47,7 @@ export const MonthlySpends = ({ setSpends }) => {
     } catch (error) {
       console.error("Error fetching spends:", error);
     }
-  }, [selectedMonthYear, dispatch, setSpends]);
+  }, [selectedDate, dispatch, setSpends]);
 
   useEffect(() => {
     fetchCurrentSpends();
@@ -130,7 +125,7 @@ export const MonthlySpends = ({ setSpends }) => {
   return (
     isAuthenticated && (
       <div>
-        <DatePickerComponent onDateChange={handleDateChange} />
+        <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
         <Paper elevation={1} style={{ padding: 20, maxWidth: 500 }}>
           <div className="top-row">
             <div className="title-container">
