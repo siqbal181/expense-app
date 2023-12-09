@@ -47,7 +47,7 @@ export const Homepage = () => {
       <h1>Homepage</h1>
       <div className="table-layout">
         <CurrentBudgets setBudgets={setCurrentBudgets}/>
-        <MonthlySpends setSpends={setMonthlySpends}/>
+        {/* <MonthlySpends setSpends={setMonthlySpends}/> */}
         <SpendVsBudgetTable spends={monthlySpends} budgets={currentBudgets} budgetVsSpend={budgetVsSpend}/>
       </div>
     </>
